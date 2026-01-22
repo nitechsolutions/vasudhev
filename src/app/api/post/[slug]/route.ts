@@ -7,12 +7,13 @@ import Post, { IPost } from "@/models/Post";
 ---------------------------------------------- */
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   await connectDB();
 
   try {
-    const { slug } = params;
+    // ✅ FIX: await params
+    const { slug } = await params;
 
     console.log("Slug received:", slug);
 
@@ -23,7 +24,6 @@ export async function GET(
       );
     }
 
-    // ✅ FIX: use slug, NOT findById
     const post: IPost | null = await Post.findOne({
       slug: slug,
     }).populate("author", "name email");
@@ -42,7 +42,7 @@ export async function GET(
     return NextResponse.json(post);
   } catch (error: any) {
     return NextResponse.json(
-      { error: error.message },
+      { error: error.message || "Server error" },
       { status: 500 }
     );
   }
