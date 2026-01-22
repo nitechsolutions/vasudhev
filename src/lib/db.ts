@@ -3,9 +3,9 @@ import mongoose, { Mongoose } from "mongoose";
 /* =========================================================
    ENV VALIDATION
 ========================================================= */
-const MONGO_URI = process.env.MONGO_URI;
+const mongo = process.env.MONGO_URI;
 
-if (!MONGO_URI) {
+if (!mongo) {
   throw new Error("Please define MONGO_URI in .env.local");
 }
 
@@ -30,15 +30,13 @@ const cached: MongooseCache =
 
 global.mongoose = cached;
 
-/* =========================================================
-   CONNECT DB
-========================================================= */
+
 export async function connectDB(): Promise<Mongoose> {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGO_URI, {
-      dbName: "blogdb",
+    cached.promise = mongoose.connect(mongo, {
+      dbName: "vasudhev",
       bufferCommands: false,
     });
   }
