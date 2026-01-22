@@ -1,6 +1,5 @@
 // lib/getUserFromRequest.ts
-import { cookies } from "next/headers";
-import { verifyToken, AuthPayload } from "./auth";
+
 
 /**
  * Server-only helper
@@ -8,9 +7,16 @@ import { verifyToken, AuthPayload } from "./auth";
  * - API routes
  * - Server Components
  */
-export function getUserFromCookies(): AuthPayload | null {
+// src/lib/getUserFromRequest.ts
+import { cookies } from "next/headers";
+import { verifyToken } from "./auth";
+import type { AuthPayload } from "@/types/user";
+
+export async function getUserFromCookies(): Promise<AuthPayload | null> {
   try {
-    const token = cookies().get("token")?.value;
+    const cookieStore = await cookies(); // ✅ MUST await
+    const token = cookieStore.get("token")?.value;
+
     if (!token) return null;
 
     return verifyToken(token);
