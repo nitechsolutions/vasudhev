@@ -1,7 +1,7 @@
 // middleware.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { decodeJwt } from "../lib/edgeAuth";
+import { decodeJwt } from "./lib/edgeAuth";
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
