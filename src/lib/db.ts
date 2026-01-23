@@ -1,17 +1,12 @@
 import mongoose, { Mongoose } from "mongoose";
 
-/* =========================================================
-   ENV VALIDATION
-========================================================= */
+
 const mongo = process.env.MONGO_URI;
 
 if (!mongo) {
   throw new Error("Please define MONGO_URI in .env.local");
 }
 
-/* =========================================================
-   GLOBAL CACHE TYPE
-========================================================= */
 interface MongooseCache {
   conn: Mongoose | null;
   promise: Promise<Mongoose> | null;
@@ -22,9 +17,7 @@ declare global {
   var mongoose: MongooseCache | undefined;
 }
 
-/* =========================================================
-   CACHED CONNECTION
-========================================================= */
+
 const cached: MongooseCache =
   global.mongoose || { conn: null, promise: null };
 

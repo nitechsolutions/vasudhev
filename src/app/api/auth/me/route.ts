@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { getUserFromCookies } from "@/lib/getUserFromRequest";
 
-export async function GET(req: Request) {
-  const user = getUserFromCookies(req);
+export async function GET() {
+  const user = await getUserFromCookies(); // ✅ await + no args
 
   if (!user) {
     return NextResponse.json(
@@ -11,5 +11,5 @@ export async function GET(req: Request) {
     );
   }
 
-  return NextResponse.json({ user });
+  return NextResponse.json(user); // return user directly
 }

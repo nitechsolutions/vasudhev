@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/db";
 import Post, { IPost } from "@/models/Post";
 import { verifyToken } from "@/lib/auth";
 import cloudinary from "@/lib/cloudinary";
+import { cookies } from "next/headers";
 
 /* ---------------------------------------------
    GET POSTS (pagination + filter)
@@ -60,7 +61,8 @@ export async function POST(req: NextRequest) {
 
   try {
     /* ---------- AUTH ---------- */
-    const token = req.cookies.get("token")?.value;
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
