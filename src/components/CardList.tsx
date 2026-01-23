@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLatestPosts, setPage } from "@/store/postSlice";
 import type { RootState, AppDispatch } from "@/store";
-import Card from "./Card";
 import Pagination from "./ui/Pagination";
+import Card from "./Card";
 
 export default function CardList() {
   const dispatch = useDispatch<AppDispatch>();

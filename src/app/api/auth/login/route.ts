@@ -1,30 +1,68 @@
+import { NextResponse } from "next/server";
+import { comparePassword, signToken } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
 import User from "@/models/User";
-import { hashPassword } from "@/lib/auth";
 
-export async function POST(req) {
+interface LoginBody {
+  email: string;
+  password: string;
+}
+
+export async function POST(req: Request) {
   await connectDB();
+
   try {
-    const { name, email, password } = await req.json();
+    const body = (await req.json()) as LoginBody;
+    const { email, password } = body;
 
-    if (!email || !password)
-      return Response.json({ error: "Email & Password required" }, { status: 400 });
+    if (!email || !password) {
+      return NextResponse.json(
+        { error: "Email & password required" },
+        { status: 400 }
+      );
+    }
 
-    const exists = await User.findOne({ email });
-    if (exists)
-      return Response.json({ error: "User already exists" }, { status: 400 });
+    const user = await User.findOne({ email }).lean();
+    if (!user) {
+      return NextResponse.json(
+        { error: "Invalid email or password" },
+        { status: 400 }
+      );
+    }
 
-    const hashed = await hashPassword(password);
+    const match = await comparePassword(password, user.password);
+    if (!match) {
+      return NextResponse.json(
+        { error: "Invalid email or password" },
+        { status: 400 }
+      );
+    }
 
-    const user = await User.create({
-      name,
-      email,
-      password: hashed,
-      role: "reader",
+    const token = signToken({
+      id: user._id.toString(),
+      email: user.email,
+      role: user.role,
     });
 
-    return Response.json({ message: "Registered", user });
-  } catch (e) {
-    return Response.json({ error: e.message }, { status: 500 });
+    const res = NextResponse.json({
+      message: "Login successful",
+      user: {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+      },
+    });
+
+    res.headers.append(
+      "Set-Cookie",
+      `token=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`
+    );
+
+    return res;
+  } catch (error) {
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
   }
 }
