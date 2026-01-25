@@ -14,7 +14,7 @@ export async function GET(
 ) {
   await connectDB();
 
-  const { id } = params;
+  const { id } = await params;
 
   const post: IPost | null = await Post.findById(id);
 
@@ -37,7 +37,7 @@ export async function PUT(
 ) {
   await connectDB();
 
-  const { id } = params;
+  const { id } = await params;
 
   const user = getUserFromCookies(req);
   if (!user) {

@@ -8,7 +8,7 @@ import {
   ChangeEvent,
   FormEvent,
 } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import QuillEditor from "@/components/QuillEditor";
 
 /* ===============================
@@ -16,10 +16,10 @@ import QuillEditor from "@/components/QuillEditor";
 ================================ */
 
 interface EditPostForm {
-  title_hi: string;
-  slug_hi: string;
-  category_hi: string;
-  description_hi: string;
+  title: string;
+  slug: string;
+  category: string;
+  description: string;
   tags: string;
   featured: boolean;
   trending: boolean;
@@ -29,10 +29,10 @@ interface EditPostForm {
 
 interface PostResponse {
   _id: string;
-  title_hi: string;
-  slug_hi: string;
-  category_hi: string;
-  description_hi: string;
+  title: string;
+  slug: string;
+  category: string;
+  description: string;
   image: string;
   tags: string[];
   featured: boolean;
@@ -43,26 +43,23 @@ interface PostResponse {
    Component
 ================================ */
 
-export default function EditBlogPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function EditBlogPage() {
   const router = useRouter();
 
-  const editorRef = useRef<{
-    getHTML: () => string;
-  } | null>(null);
+  // ✅ CORRECT WAY IN CLIENT COMPONENT
+  const params = useParams<{ id: string }>();
+  const id = params.id;
+
+  const editorRef = useRef<{ getHTML: () => string } | null>(null);
 
   const [loading, setLoading] = useState(true);
-  const [showPreview, setShowPreview] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const [form, setForm] = useState<EditPostForm>({
-    title_hi: "",
-    slug_hi: "",
-    category_hi: "",
-    description_hi: "",
+    title: "",
+    slug: "",
+    category: "",
+    description: "",
     tags: "",
     featured: false,
     trending: false,
@@ -75,16 +72,20 @@ export default function EditBlogPage({
   ================================ */
 
   useEffect(() => {
+    if (!id) return;
+
     async function loadPost() {
-      const res = await fetch(`/api/posts/${params.id}`);
+      const res = await fetch(`/api/posts/admin/${id}`);
+      if (!res.ok) return;
+
       const post: PostResponse = await res.json();
 
       setForm({
-        title_hi: post.title_hi,
-        slug_hi: post.slug_hi,
-        category_hi: post.category_hi,
-        description_hi: post.description_hi,
-        tags: post.tags?.join(", ") || "",
+        title: post.title,
+        slug: post.slug,
+        category: post.category,
+        description: post.description,
+        tags: post.tags.join(", "),
         featured: post.featured,
         trending: post.trending,
         image: null,
@@ -96,10 +97,10 @@ export default function EditBlogPage({
     }
 
     loadPost();
-  }, [params.id]);
+  }, [id]);
 
   /* ===============================
-     Quill Modules
+     Quill
   ================================ */
 
   const modules = useMemo(
@@ -122,48 +123,32 @@ export default function EditBlogPage({
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
-    const { name, type, checked, value, files } = e.target as HTMLInputElement;
+    const { name, type, value, checked, files } =
+      e.target as HTMLInputElement;
 
     if (type === "file" && files?.[0]) {
       const file = files[0];
-      setForm((prev) => ({ ...prev, image: file }));
+      setForm((p) => ({ ...p, image: file }));
       setImagePreview(URL.createObjectURL(file));
       return;
     }
 
-    setForm((prev) => ({
-      ...prev,
+    setForm((p) => ({
+      ...p,
       [name]: type === "checkbox" ? checked : value,
-    }));
-  }
-
-  function generateSlug(text: string) {
-    return text
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\u0900-\u097F\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
-  }
-
-  function autoSlug() {
-    if (!form.title_hi) return;
-    setForm((prev) => ({
-      ...prev,
-      slug_hi: generateSlug(prev.title_hi),
     }));
   }
 
   async function handleUpdate(e: FormEvent) {
     e.preventDefault();
 
-    const description_hi = editorRef.current?.getHTML() || "";
+    const description = editorRef.current?.getHTML() || "";
 
     const fd = new FormData();
-    fd.append("title_hi", form.title_hi);
-    fd.append("slug_hi", form.slug_hi);
-    fd.append("category_hi", form.category_hi);
-    fd.append("description_hi", description_hi);
+    fd.append("title", form.title);
+    fd.append("slug", form.slug);
+    fd.append("category", form.category);
+    fd.append("description", description);
     fd.append("featured", String(form.featured));
     fd.append("trending", String(form.trending));
     fd.append(
@@ -175,120 +160,63 @@ export default function EditBlogPage({
 
     if (form.image) fd.append("image", form.image);
 
-    const res = await fetch(`/api/posts/${params.id}`, {
+    const res = await fetch(`/api/posts/${id}`, {
       method: "PUT",
       body: fd,
     });
 
-    const json = await res.json();
     if (!res.ok) {
-      alert("❌ Error: " + json.error);
+      alert("❌ Update failed");
       return;
     }
 
-    alert("✅ Post Updated Successfully!");
     router.push("/dashboard/writer");
   }
 
   if (loading) return <p className="p-6">Loading...</p>;
 
-  const previewHTML = editorRef.current?.getHTML() || "";
-
-  /* ===============================
-     UI
-  ================================ */
-
   return (
     <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">
-        पोस्ट संपादित करें
-      </h1>
+      <h1 className="text-3xl font-bold mb-6">पोस्ट संपादित करें </h1>
 
       <form onSubmit={handleUpdate} className="space-y-5">
-        {/* Title + Slug */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <input
-            className="input"
-            name="title_hi"
-            value={form.title_hi}
-            onChange={handleChange}
-            placeholder="शीर्षक"
-          />
-
-          <div className="flex gap-2">
-            <input
-              className="input flex-1"
-              name="slug_hi"
-              value={form.slug_hi}
-              onChange={handleChange}
-              placeholder="Slug"
-            />
-            <button type="button" onClick={autoSlug} className="btn-gray">
-              Auto
-            </button>
-          </div>
-        </div>
-
-        {/* Category */}
         <input
           className="input"
-          name="category_hi"
-          value={form.category_hi}
+          name="title"
+          value={form.title}
           onChange={handleChange}
-          placeholder="Category"
         />
 
-        {/* Image */}
-        <input type="file" accept="image/*" onChange={handleChange} />
+        <input
+          className="input"
+          name="slug"
+          value={form.slug}
+          onChange={handleChange}
+        />
+
+        <input
+          className="input"
+          name="category"
+          value={form.category}
+          onChange={handleChange}
+        />
+
+        <input type="file" onChange={handleChange} />
 
         {imagePreview && (
           <img
             src={imagePreview}
-            className="w-full h-60 object-cover rounded"
+            className="rounded h-60 object-cover"
           />
         )}
 
-        {/* Tags */}
-        <input
-          className="input"
-          name="tags"
-          value={form.tags}
-          onChange={handleChange}
-          placeholder="Tags"
-        />
-
-        {/* Editor */}
         <QuillEditor
           ref={editorRef}
-          initialValue={form.description_hi}
+          initialValue={form.description}
           modules={modules}
-          placeholder="लेख सामग्री लिखें..."
         />
 
-        {/* Checkboxes */}
-        <div className="flex gap-6">
-          <label>
-            <input
-              type="checkbox"
-              name="featured"
-              checked={form.featured}
-              onChange={handleChange}
-            />{" "}
-            Featured
-          </label>
-
-          <label>
-            <input
-              type="checkbox"
-              name="trending"
-              checked={form.trending}
-              onChange={handleChange}
-            />{" "}
-            Trending
-          </label>
-        </div>
-
-        <button className="px-6 py-2 bg-indigo-600 text-white rounded">
+        <button className="bg-indigo-600 text-white px-6 py-2 rounded">
           Update Post
         </button>
       </form>

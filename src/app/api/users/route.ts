@@ -6,9 +6,11 @@ import { getUserFromCookies } from "@/lib/getUserFromRequest";
 export async function GET(req: Request) {
   await connectDB();
 
-  const user = getUserFromCookies(req);
+  const user = await getUserFromCookies(req);
 
   if (!user || user.role !== "admin") {
+    console.log(user.role);
+    
     return NextResponse.json(
       { error: "Forbidden" },
       { status: 403 }

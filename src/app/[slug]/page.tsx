@@ -7,7 +7,7 @@ export default async function ArticlePage({
 }: {
   params: { slug: string };
 }) {
-  const { slug } = await params;  
+  const { slug } = await params;
 
   return <PostClient slug={slug} />;
 }
