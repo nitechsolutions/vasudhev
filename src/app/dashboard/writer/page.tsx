@@ -9,8 +9,8 @@ import { useEffect, useState } from "react";
 
 interface WriterPost {
   _id: string;
-  title_hi: string;
-  category_hi: string;
+  title: string;
+  category: string;
 }
 
 /* ===============================
@@ -76,10 +76,10 @@ export default function WriterPanel() {
           >
             <div>
               <h3 className="font-semibold">
-                {post.title_hi}
+                {post.title}
               </h3>
               <p className="text-xs text-gray-500">
-                {post.category_hi}
+                {post.category}
               </p>
             </div>
 
