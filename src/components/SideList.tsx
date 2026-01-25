@@ -1,37 +1,41 @@
-import React from "react";
+"use client";
 
-interface Author {
-  name?: string;
-}
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "@/store";
+import { fetchTrendingPosts } from "@/store/postSlice";
 
-export interface TrendingPost {
-  _id: string;
-  title: string;
-  category: string;
-  author?: Author | null;
-}
+export default function SideList() {
+  const dispatch = useDispatch<AppDispatch>();
 
-interface SideListProps {
-  trendingPost: TrendingPost[];
-}
+  const trending = useSelector(
+    (state: RootState) => state.posts.trending
+  );
 
-const SideList: React.FC<SideListProps> = ({ trendingPost }) => {
+  useEffect(() => {
+    if (!trending.length) {
+      dispatch(fetchTrendingPosts());
+    }
+  }, [dispatch, trending.length]);
+
+  if (!trending.length) return null;
+
   return (
     <div className="mt-4 bg-gray-100 rounded-lg py-2 px-4 sticky top-10">
       <span className="text-black text-sm">What's hot</span>
       <h3 className="text-2xl font-bold mb-6">Trending 🔥</h3>
 
       <div className="space-y-6">
-        {trendingPost.map((item) => (
+        {trending.map((item) => (
           <div key={item._id} className="flex flex-col gap-2">
-            <span className="px-3 py-1 text-black text-xs rounded-full w-fit bg-orange-600">
+            <span className="px-3 py-1 text-white font-semibold text-xs rounded-full w-fit bg-orange-600">
               {item.category}
             </span>
 
             <p className="font-medium">{item.title}</p>
 
             <span className="text-xs text-gray-500">
-              {item.author?.name ?? "Unknown"}
+              {new Date(item.createdAt).toLocaleDateString("hi-IN")}
             </span>
           </div>
         ))}
@@ -40,4 +44,3 @@ const SideList: React.FC<SideListProps> = ({ trendingPost }) => {
   );
 };
 
-export default SideList;

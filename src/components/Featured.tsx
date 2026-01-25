@@ -18,6 +18,7 @@ export default function Featured() {
   }, [dispatch, featuredPost]);
 
   if (!featuredPost) return null;
+  
 
   const description = stripHtml(featuredPost.description);
 
@@ -26,12 +27,12 @@ export default function Featured() {
       <img
         src={featuredPost.image}
         alt={featuredPost.title}
-        className="w-full lg:w-1/2 h-80 object-cover rounded-lg"
+        className="w- lg:w-1/2 h-80 object-cover rounded-lg"
       />
 
       <div className="flex flex-col justify-center">
         <Link
-          href={`/${featuredPost._id}`}
+          href={`/${featuredPost.slug}`}
           className="text-2xl font-bold hover:underline"
         >
           {featuredPost.title}

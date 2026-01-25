@@ -1,6 +1,7 @@
 // app/api/posts/route.ts
 import { NextResponse, NextRequest } from "next/server";
 import { connectDB } from "@/lib/db";
+import "@/models/User";
 import Post, { IPost } from "@/models/Post";
 import { verifyToken } from "@/lib/auth";
 import cloudinary from "@/lib/cloudinary";

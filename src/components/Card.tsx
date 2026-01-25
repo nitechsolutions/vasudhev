@@ -9,11 +9,11 @@ export default function Card({ post }: { post: Post }) {
 
   return (
     <div className="flex flex-col md:flex-row gap-8">
-      <img src={post.image} className="md:w-1/3 h-40 object-cover rounded-lg" />
+      <img src={post.image} alt={post.title} className="md:w-1/3 h-40 object-cover rounded-lg" />
 
       <div className="flex flex-col">
         <Link
-          href={`/${post._id}`}
+          href={`/${post.slug}`}
           className="text-xl font-semibold hover:underline"
         >
           {post.title}
