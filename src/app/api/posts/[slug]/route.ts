@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Post, { IPost } from "@/models/Post";
 
-/* ---------------------------------------------
-   GET POST BY HINDI SLUG
----------------------------------------------- */
+
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -13,9 +11,7 @@ export async function GET(
 
   try {
     // ✅ FIX: await params
-    const { slug } = await params;
-
-    console.log("Slug received:", slug);
+    const { slug } = await params
 
     if (!slug) {
       return NextResponse.json(
