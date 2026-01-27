@@ -9,7 +9,7 @@ export async function PUT(
 ) {
   await connectDB();
 
-  const admin = await getUserFromCookies(req);
+  const admin = await getUserFromCookies();
   const { id } = await params; // ✅ matches folder name
 
   if (!admin || admin.role !== "admin") {
