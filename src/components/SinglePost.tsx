@@ -20,7 +20,6 @@ export default function SinglePost({ post }: { post: Post }) {
           src={post.image}
           alt={post.title}
           className="w-full rounded mb-6"
-          alt={post.title}
         />
       )}
 

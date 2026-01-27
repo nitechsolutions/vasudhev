@@ -17,7 +17,7 @@ const categoryItems: string[] = [
   "मनोरंजन",
 ];
 
-export default function Navbar(): JSX.Element {
+export default function Navbar() {
 
   return (
     <>

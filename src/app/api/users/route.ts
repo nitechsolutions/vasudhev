@@ -8,9 +8,7 @@ export async function GET(req: Request) {
 
   const user = await getUserFromCookies();
 
-  if (!user || user.role !== "admin") {
-    console.log(user.role);
-    
+  if (!user || user.role !== "admin") {    
     return NextResponse.json(
       { error: "Forbidden" },
       { status: 403 }
