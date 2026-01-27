@@ -39,7 +39,7 @@ export async function PUT(
 
   const { id } = await params;
 
-  const user = getUserFromCookies(req);
+  const user = await getUserFromCookies(req);
   if (!user) {
     return NextResponse.json(
       { error: "Unauthorized" },
@@ -128,9 +128,9 @@ export async function DELETE(
 ) {
   await connectDB();
 
-  const { id } = params;
+  const { id } = await params;
 
-  const user = getUserFromCookies(req);
+  const user = await getUserFromCookies(req);
   if (!user) {
     return NextResponse.json(
       { error: "Unauthorized" },
