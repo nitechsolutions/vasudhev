@@ -10,7 +10,7 @@ import cloudinary from "@/lib/cloudinary";
 ========================================================= */
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   await connectDB();
 
@@ -33,13 +33,13 @@ export async function GET(
 ========================================================= */
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   await connectDB();
 
   const { id } = await params;
 
-  const user = getUserFromCookies(req);
+  const user = await getUserFromCookies(req);
   if (!user) {
     return NextResponse.json(
       { error: "Unauthorized" },
@@ -124,13 +124,13 @@ export async function PUT(
 ========================================================= */
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   await connectDB();
 
-  const { id } = params;
+  const { id } = await params;
 
-  const user = getUserFromCookies(req);
+  const user = await getUserFromCookies(req);
   if (!user) {
     return NextResponse.json(
       { error: "Unauthorized" },

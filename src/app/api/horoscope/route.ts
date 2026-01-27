@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { verifyToken } from "@/lib/auth";
 import Horoscope from "@/models/Horoscope";
+import { cookies } from "next/headers";
 
 /* ================================
    Types
@@ -21,7 +22,8 @@ export async function POST(req: Request) {
   await connectDB();
 
   try {
-    const token = req.cookies.get("token")?.value;
+    const cookieStore = await cookies()
+    const token = cookieStore.get("token")?.value;
     if (!token) {
       return NextResponse.json(
         { error: "Unauthorized" },

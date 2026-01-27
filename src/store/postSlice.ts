@@ -27,7 +27,7 @@ export const fetchLatestPosts = createAsyncThunk(
   "posts/fetchLatest",
   async ({ page, limit }: { page: number; limit: number }) => {
     const res = await fetch(
-      `/api/posts?type=latest&page=${page}&limit=${limit}`,
+      `/api/posts?&page=${page}&limit=${limit}`,
     );
     return res.json();
   },
