@@ -6,7 +6,7 @@ import { getUserFromCookies } from "@/lib/getUserFromRequest";
 export async function GET(req: Request) {
   await connectDB();
 
-  const user = await getUserFromCookies(req);
+  const user = await getUserFromCookies();
 
   if (!user || user.role !== "admin") {
     console.log(user.role);
