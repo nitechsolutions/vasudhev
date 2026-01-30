@@ -1,4 +1,3 @@
-// app/hi/post/[slug]/PostClient.tsx
 "use client";
 
 import { useEffect } from "react";
@@ -18,31 +17,24 @@ export default function PostClient({ slug }: { slug: string }) {
     (state: RootState) => state.posts
   );
 
-  console.log("client slug:", slug); // ✅ NOW IT WORKS
+  console.log(slug);
+  
 
   useEffect(() => {
-    if (slug) {
-      dispatch(fetchPostBySlug(slug));
-    }
+    if (slug) dispatch(fetchPostBySlug(slug));
   }, [slug, dispatch]);
 
   useEffect(() => {
-    if (single?.category) {
+    if (single?.category)
       dispatch(fetchRelatedPosts(single.category));
-    }
   }, [single, dispatch]);
 
   if (loading || !single) {
-    return (
-      <div className="p-10 text-center text-lg">
-        लोड हो रहा है...
-      </div>
-    );
+    return <div className="p-10 text-center">लोड हो रहा है…</div>;
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 mt-6 gap-8">
-      {/* LEFT */}
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
       <div className="lg:col-span-2 space-y-5">
         <div className="text-sm text-gray-500">
           <Link href="/" className="hover:underline hover:text-blue-500">होम</Link> /{" "}
@@ -51,11 +43,9 @@ export default function PostClient({ slug }: { slug: string }) {
           </Link>{" "}
           / {single.title.slice(0, 40)}...
         </div>
-
         <SinglePost post={single} />
       </div>
 
-      {/* RIGHT */}
       <aside className="sticky top-2">
         <h2 className="text-2xl font-bold mb-4">
           संबंधित खबरें

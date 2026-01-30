@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "@/store";
 import { fetchTrendingPosts } from "@/store/postSlice";
+import Link from "next/link";
 
 export default function SideList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,11 +33,11 @@ export default function SideList() {
               {item.category}
             </span>
 
-            <p className="font-medium">{item.title}</p>
+            <Link href={`${item.slug}`} className="font-medium">{item.title}</Link>
 
-            <span className="text-xs text-gray-500">
+            {/* <span className="text-xs text-gray-500">
               {new Date(item.createdAt).toLocaleDateString("hi-IN")}
-            </span>
+            </span> */}
           </div>
         ))}
       </div>
