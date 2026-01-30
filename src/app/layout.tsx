@@ -5,8 +5,8 @@ import "./globals.css";
 
 import Topbar from "@/components/Topbar";
 import Navbar from "@/components/Navbar";
-// import Footer from "@/components/Footer";
 import { Providers } from "./providers";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,7 +20,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Vasudhev | हिन्दी न्यूज, Breaking News, Latest News, Top Headlines",
-  description: "Vasudhev Hindi News Portal",
+  description: "Vasudhev Hindi News पर पढ़ें देश, दुनिया, बिज़नेस, टेक्नोलॉजी, हेल्थ, लाइफस्टाइल, दिल्ली, मुंबई, पुणे और राशिफल की ताज़ा खबरें। ",
+  keywords: "Vasudhev Hindi News, हिंदी न्यूज़, आज की खबरें, भारत समाचार, देश, दुनिया, बिज़नेस, टेक्नोलॉजी, हेल्थ, लाइफस्टाइल, दिल्ली, मुंबई, पुणे और राशिफल की ताज़ा खबरें।",
+  metadataBase: new URL("https://vasudhev.com"),
 };
 
 export default function RootLayout({
@@ -39,7 +41,7 @@ export default function RootLayout({
               <Topbar />
               <Navbar />
               {children}
-              {/* <Footer /> */}
+              <Footer />
             </div>
           </div>
         </Providers>

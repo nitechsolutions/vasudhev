@@ -12,7 +12,7 @@ export default async function Home() {
          <Featured  />
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">Latest Posts</h2>
+          <h2 className="text-2xl font-bold mb-4">ताज़ा ख़बर</h2>
           <CardList />
         </section>
       </div>

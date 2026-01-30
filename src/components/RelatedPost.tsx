@@ -20,18 +20,19 @@ export default function RelatedPost({
         .map((item) => (
           <a
             key={item._id}
-            href={`/hi/post/${item.slug}`}
+            href={`/${item.slug}`}
             className="flex gap-3"
           >
             {item.image && (
               <img
                 src={item.image}
+                alt={item.title}
                 className="w-20 h-20 object-cover rounded"
               />
             )}
             <div>
               <p className="font-semibold">
-                {item.title.slice(0, 60)}...
+                {item.title}
               </p>
             </div>
           </a>

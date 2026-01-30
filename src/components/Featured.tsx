@@ -30,7 +30,7 @@ export default function Featured() {
         className="w- lg:w-1/2 h-80 object-cover rounded-lg"
       />
 
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col items-start justify-center">
         <Link
           href={`/${featuredPost.slug}`}
           className="text-2xl font-bold hover:underline"
@@ -42,7 +42,7 @@ export default function Featured() {
 
         <Link
           href={`/category/${encodeURIComponent(featuredPost.category)}`}
-          className="mt-5 inline-block text-White-600 text-lg border rounded-full w-auto px-4 "
+          className="mt-5 inline-block text-White-600 text-md border rounded-full  px-4 "
         >
           {featuredPost.category} →
         </Link>

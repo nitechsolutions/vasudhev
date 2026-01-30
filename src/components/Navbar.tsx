@@ -24,7 +24,7 @@ export default function Navbar() {
       {/* ================= TOP BANNER ================= */}
       <div className="relative w-full bg-cover bg-center">
         <Image
-          src="/vasudhaiv_tree.png"
+          src="/vasudhev_tree2.png"
           alt="vasudhev.com"
           width={300}
           height={150}
