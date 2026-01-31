@@ -9,42 +9,48 @@ import type { RootState, AppDispatch } from "@/store";
 
 export default function Featured() {
   const dispatch = useDispatch<AppDispatch>();
-  const featuredPost = useSelector((state: RootState) => state.posts.featured);
+  const {featured, loading} = useSelector((state: RootState) => state.posts);
 
   useEffect(() => {
-    if (!featuredPost) {
+    if (!featured) {
       dispatch(fetchFeaturedPosts());
     }
-  }, [dispatch, featuredPost]);
+  }, [dispatch, featured]);
 
-  if (!featuredPost) return null;
+  if (!featured) {
+    return <div className="p-10 text-center">लोड हो रहा है…</div>;
+  }
+
+   if (loading ) {
+    return <div className="p-10 text-center">लोड हो रहा है…</div>;
+  }
   
 
-  const description = stripHtml(featuredPost.description);
+  const description = stripHtml(featured.description);
 
   return (
     <div className="flex flex-col mt-6 lg:flex-row gap-6">
       <img
-        src={featuredPost.image}
-        alt={featuredPost.title}
+        src={featured.image}
+        alt={featured.title}
         className="w- lg:w-1/2 h-80 object-cover rounded-lg"
       />
 
       <div className="flex flex-col items-start justify-center">
         <Link
-          href={`/${featuredPost.slug}`}
+          href={`/${featured.slug}`}
           className="text-2xl font-bold hover:underline"
         >
-          {featuredPost.title}
+          {featured.title}
         </Link>
 
         <p className="text-gray-600 mt-4">{description.substring(0, 250)}...</p>
 
         <Link
-          href={`/category/${encodeURIComponent(featuredPost.category)}`}
+          href={`/category/${encodeURIComponent(featured.category)}`}
           className="mt-5 inline-block text-White-600 text-md border rounded-full  px-4 "
         >
-          {featuredPost.category} →
+          {featured.category} →
         </Link>
       </div>
     </div>
