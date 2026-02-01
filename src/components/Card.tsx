@@ -36,7 +36,8 @@ export default function Card({ post }: { post: Post }) {
             text-lg sm:text-xl lg:text-2xl
             font-semibold
             leading-snug
-            hover:underline
+            hover:text-orange-500
+            active:text-orange-600
           "
         >
           {post.title}
@@ -53,13 +54,16 @@ export default function Card({ post }: { post: Post }) {
             href={`/category/${post.category}`}
             className="
               text-xs sm:text-sm
-              border border-gray-300
+              text-green-700
+              border border-greem-300
               rounded-full
               px-3 py-1
-              hover:bg-gray-100
+              hover:bg-green-100
+              active:bg-orange-600
+              active:text-white
             "
           >
-            {post.category}
+            {post.category} →
           </Link>
 
           <Link

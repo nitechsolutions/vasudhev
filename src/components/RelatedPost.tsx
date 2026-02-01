@@ -31,7 +31,7 @@ export default function RelatedPost({
               />
             )}
             <div>
-              <p className="font-semibold">
+              <p className="font-semibold active:text-orange-600">
                 {item.title}
               </p>
             </div>

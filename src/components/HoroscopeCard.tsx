@@ -39,7 +39,7 @@ export default function HoroscopeCard() {
   }, [zodiac, today]);
 
   return (
-    <article className="max-w-md bg-white shadow border rounded-lg p-4 mt-6">
+    <article className=" bg-white shadow border rounded-lg p-4 mt-6">
       {/* Header */}
       <h3 className="font-semibold text-gray-800 mb-3">
         आज का राशिफल |{" "}

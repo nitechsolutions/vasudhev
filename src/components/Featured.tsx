@@ -39,7 +39,7 @@ export default function Featured() {
       <div className="flex flex-col items-start justify-center">
         <Link
           href={`/${featured.slug}`}
-          className="text-2xl font-bold hover:underline"
+          className="text-2xl font-bold hover:text-orange-500 active:text-orange-600"
         >
           {featured.title}
         </Link>
@@ -48,7 +48,7 @@ export default function Featured() {
 
         <Link
           href={`/category/${encodeURIComponent(featured.category)}`}
-          className="mt-5 inline-block text-White-600 text-md border rounded-full  px-4 "
+          className="mt-5 inline-block text-green-700 text-md border rounded-full border-green-300 hover:bg-green-100 px-4 active:text-white active:bg-orange-600"
         >
           {featured.category} →
         </Link>

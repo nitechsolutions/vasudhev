@@ -18,7 +18,6 @@ const categoryItems: string[] = [
 ];
 
 export default function Navbar() {
-
   return (
     <>
       {/* ================= TOP BANNER ================= */}
@@ -29,17 +28,17 @@ export default function Navbar() {
           width={300}
           height={150}
           priority
-          className="h-full w-auto mx-auto object-contain"
+          className="mx-auto object-contain"
         />
       </div>
 
-      {/* ================= DESKTOP NAV ================= */}
-      <nav className="w-full bg-white border-b-2 border-orange-500 shadow-sm sticky top-0 z-50">
-        <div className="wrapper bg-gray-100 h-8 flex items-center justify-center gap-8">
+      {/* ================= DESKTOP & TABLET NAV ================= */}
+      <nav className="hidden md:block w-full  bg-white border-b-2 border-orange-500 shadow-sm sticky top-0 z-50">
+        <div className="bg-gray-100 justify-center h-10 flex items-center gap-6 px-4 overflow-x-auto whitespace-nowrap">
           {/* Home */}
           <Link
             href="/"
-            className="hidden md:block text-gray-700 font-semibold text-sm hover:text-orange-500"
+            className="text-gray-700 font-semibold  hover:text-orange-500 shrink-0 active:text-orange-600"
           >
             होम
           </Link>
@@ -49,7 +48,7 @@ export default function Navbar() {
             <Link
               key={item}
               href={`/category/${encodeURIComponent(item)}`}
-              className="hidden md:block text-gray-700 font-semibold text-sm hover:text-orange-500"
+              className="text-gray-700 font-semibold hover:text-orange-500 shrink-0 active:text-orange-600"
             >
               {item}
             </Link>
@@ -58,12 +57,19 @@ export default function Navbar() {
       </nav>
 
       {/* ================= MOBILE NAV ================= */}
-      <nav className="md:hidden overflow-x-auto flex gap-4 py-2 px-3 border-b border-gray-400 bg-white">
+      <nav className="md:hidden flex gap-4 py-2 px-3 bg-gray-100 border-b-2 border-orange-500 shadow-sm overflow-x-auto whitespace-nowrap">
+        <Link
+          href="/"
+          className="text-gray-700 font-semibold text-sm hover:text-orange-500 shrink-0 active:text-orange-600"
+        >
+          होम
+        </Link>
+
         {categoryItems.map((item) => (
           <Link
             key={item}
             href={`/category/${encodeURIComponent(item)}`}
-            className="whitespace-nowrap text-gray-700 font-medium hover:text-orange-500"
+            className="text-gray-700 font-semibold text-sm hover:text-orange-500 shrink-0 active:text-orange-600"
           >
             {item}
           </Link>

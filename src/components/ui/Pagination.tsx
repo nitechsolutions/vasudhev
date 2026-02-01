@@ -16,7 +16,7 @@ export default function Pagination({
       <button
         disabled={page <= 1}
         onClick={() => onPageChange(page - 1)}
-        className="bg-orange-500 disabled:bg-gray-300 text-white px-5 py-2 rounded"
+        className="bg-orange-500 active:bg-orange-600 cursor-pointer disabled:bg-gray-300 text-white px-5 py-2 rounded"
       >
         Previous
       </button>
@@ -28,7 +28,7 @@ export default function Pagination({
       <button
         disabled={page >= totalPages}
         onClick={() => onPageChange(page + 1)}
-        className="bg-orange-500 disabled:bg-gray-300 text-white px-5 py-2 rounded"
+        className="bg-orange-500 active:bg-orange-600 cursor-pointer disabled:bg-gray-300 text-white px-5 py-2 rounded"
       >
         Next
       </button>

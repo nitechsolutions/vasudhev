@@ -35,7 +35,7 @@ export default function SideList() {
               {item.category}
             </span>
 
-            <Link href={`${item.slug}`} className="font-medium">{item.title}</Link>
+            <Link href={`${item.slug}`} className="font-medium active:text-orange-600 hover:text-orange-500">{item.title}</Link>
 
             {/* <span className="text-xs text-gray-500">
               {new Date(item.createdAt).toLocaleDateString("hi-IN")}
