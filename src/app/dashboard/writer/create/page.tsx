@@ -202,6 +202,7 @@ export default function CreateBlogPage() {
         >
           <option value="">श्रेणी चुनें</option>
           {[
+            "बजट 2026",
             "भारत",
             "ऑटोमोबाईल",
             "टेक्नोलॉजी",
