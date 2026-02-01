@@ -8,34 +8,73 @@ export default function Card({ post }: { post: Post }) {
   const description = stripHtml(post.description);
 
   return (
-    <div className="flex flex-col md:flex-row gap-8">
-      <img src={post.image} alt={post.title} className="md:w-1/3 lg:w-1/2 w-full h-40 object-cover m-auto rounded-lg" />
+    <article className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8">
+      {/* IMAGE */}
+      <Link
+        href={`/${post.slug}`}
+        className="block w-full sm:w-56 md:w-64 lg:w-72 flex-shrink-0"
+      >
+        <img
+          src={post.image || "/placeholder.jpg"}
+          alt={post.title}
+          className="
+            w-full 
+            h-44 sm:h-40 md:h-44 lg:h-48
+            object-cover 
+            rounded-lg
+          "
+          loading="lazy"
+        />
+      </Link>
 
-      <div className="flex flex-col">
+      {/* CONTENT */}
+      <div className="flex flex-col justify-between flex-1">
+        {/* TITLE */}
         <Link
           href={`/${post.slug}`}
-          className="text-xl font-semibold hover:underline"
+          className="
+            text-lg sm:text-xl lg:text-2xl
+            font-semibold
+            leading-snug
+            hover:underline
+          "
         >
           {post.title}
         </Link>
 
-        <p className="text-sm text-gray-600">
-          {description.substring(0, 200)}...
+        {/* DESCRIPTION */}
+        <p className="mt-2 text-sm sm:text-base text-gray-600 line-clamp-3">
+          {description.substring(0, 220)}…
         </p>
 
-        <div className="mt-2 flex justify-between">
+        {/* FOOTER */}
+        <div className="mt-4 flex items-center justify-between">
           <Link
             href={`/category/${post.category}`}
-            className="border rounded-full px-4 text-sm"
+            className="
+              text-xs sm:text-sm
+              border border-gray-300
+              rounded-full
+              px-3 py-1
+              hover:bg-gray-100
+            "
           >
-            {post.category} →
+            {post.category}
           </Link>
 
-          <Link href={`/${post.slug}`} className="text-orange-600 text-sm">
+          <Link
+            href={`/${post.slug}`}
+            className="
+              text-orange-600
+              text-sm sm:text-base
+              font-medium
+              hover:underline
+            "
+          >
             और पढ़ें →
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

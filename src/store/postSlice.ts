@@ -62,7 +62,7 @@ export const fetchTrendingPosts = createAsyncThunk(
 export const fetchPostBySlug = createAsyncThunk(
   "post/fetchBySlug",
   async (slug: string) => {
-    const res = await fetch(`/api/posts/${slug}`);
+    const res = await fetch(`/api/posts/public/${slug}`);
     if (!res.ok) throw new Error("Post not found");
     return res.json();
   }

@@ -41,7 +41,7 @@ export default function PostClient({ slug }: { slug: string }) {
           <Link href={`/category/${single.category}`} className="hover:underline hover:text-blue-500">
             {single.category}
           </Link>{" "}
-          / {single.title.slice(0, 40)}...
+          / {single.slug.slice(0, 40)}...
         </div>
         <SinglePost post={single} />
       </div>

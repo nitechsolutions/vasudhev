@@ -19,7 +19,9 @@ export default function SideList() {
     }
   }, [dispatch, trending.length]);
 
-  if (!trending.length) return null;
+  if (!trending.length) {
+    return <div className="p-10 text-center">लोड हो रहा है…</div>;
+  }
 
   return (
     <div className="mt-4 bg-gray-100 rounded-lg py-2 px-4 sticky top-10">

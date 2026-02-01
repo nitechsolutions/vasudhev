@@ -27,13 +27,13 @@ export default function CategoryClient({ category }: Props) {
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 mb-6">
-        <Link href="/" className="hover:underline text-blue-500">
+        <Link href="/" className="hover:underline hover:text-blue-500">
           होम
         </Link>{" "}
         /{" "}
         <Link
           href={`/category/${encodeURIComponent(category)}`}
-          className="hover:underline"
+          className="underline text-blue-500"
         >
           {category}
         </Link>

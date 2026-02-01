@@ -9,13 +9,17 @@ import Card from "./Card";
 
 export default function CardList() {
   const dispatch = useDispatch<AppDispatch>();
-  const { posts, page, totalPages } = useSelector(
+  const { posts, page, totalPages, loading } = useSelector(
     (state: RootState) => state.posts
   );
 
   useEffect(() => {
     dispatch(fetchLatestPosts({ page, limit: 6 }));
   }, [page]);
+
+  if (loading) {
+    return <div className="p-10 text-center">लोड हो रहा है…</div>;
+  }
 
   return (
     <div className="space-y-14">
