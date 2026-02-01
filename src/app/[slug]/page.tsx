@@ -13,7 +13,7 @@ async function getPost(slug: string) {
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
   const res = await fetch(
-    `${protocol}://${host}/api/posts/${slug}`,
+    `${protocol}://${host}/api/posts/public/${slug}`,
     { cache: "no-store" }
   );
 
