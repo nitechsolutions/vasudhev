@@ -16,11 +16,11 @@ interface Props {
 export default function CategoryClient({ category }: Props) {
   const dispatch = useDispatch<AppDispatch>();
   const { posts, loading, page, totalPages } = useSelector(
-    (state: RootState) => state.posts
+    (state: RootState) => state.posts,
   );
 
   useEffect(() => {
-    dispatch(fetchCategoryPosts({ category, page, limit: 6  }));
+    dispatch(fetchCategoryPosts({ category, page, limit: 6 }));
   }, [category, page, dispatch]);
 
   return (
@@ -39,16 +39,12 @@ export default function CategoryClient({ category }: Props) {
         </Link>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">
-        {category} समाचार
-      </h1>
+      <h1 className="text-3xl font-bold mb-6">{category} समाचार</h1>
 
       {loading && <p>लोड हो रहा है...</p>}
 
       {!loading && posts.length === 0 && (
-        <p className="text-gray-500">
-          इस श्रेणी में कोई पोस्ट उपलब्ध नहीं है।
-        </p>
+        <p className="text-gray-500">इस श्रेणी में कोई पोस्ट उपलब्ध नहीं है।</p>
       )}
 
       <div className="space-y-10">
@@ -57,10 +53,10 @@ export default function CategoryClient({ category }: Props) {
         ))}
       </div>
       <Pagination
-              page={page}
-              totalPages={totalPages}
-              onPageChange={(p) => dispatch(setPage(p))}
-            />
+        page={page}
+        totalPages={totalPages}
+        onPageChange={(p) => dispatch(setPage(p))}
+      />
     </div>
   );
 }

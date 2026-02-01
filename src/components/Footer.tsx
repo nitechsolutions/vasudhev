@@ -20,11 +20,11 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold text-gray-800 mb-3">श्रेणियाँ</h3>
           <ul className="space-y-2 text-sm">
-            <li><Link href="/category/भारत">देश</Link></li>
-            <li><Link href="/category/एजुकेशन">एजुकेशन</Link></li>
-            <li><Link href="/category/ऑटोमोबाईल ">ऑटोमोबाईल</Link></li>
-            <li><Link href="/category/टेक्नोलॉजी">टेक्नोलॉजी</Link></li>
-            <li><Link href="/category/हेल्थ">हेल्थ</Link></li>
+            <li><Link className="active:text-orange-600 hover:font-semibold" href="/category/भारत">देश</Link></li>
+            <li><Link className="active:text-orange-600 hover:font-semibold" href="/category/एजुकेशन">एजुकेशन</Link></li>
+            <li><Link className="active:text-orange-600 hover:font-semibold" href="/category/ऑटोमोबाईल ">ऑटोमोबाईल</Link></li>
+            <li><Link className="active:text-orange-600 hover:font-semibold" href="/category/टेक्नोलॉजी">टेक्नोलॉजी</Link></li>
+            <li><Link className="active:text-orange-600 hover:font-semibold" href="/category/हेल्थ">हेल्थ</Link></li>
           </ul>
         </div>
 
@@ -32,11 +32,11 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold text-gray-800 mb-3">महत्वपूर्ण लिंक</h3>
           <ul className="space-y-2 text-sm">
-            <li><Link href="/about">About Us</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
-            <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-            <li><Link href="/terms">Terms & Conditions</Link></li>
-            <li><Link href="/disclaimer">Disclaimer</Link></li>
+            <li><Link className="active:text-orange-600 hover:font-semibold" href="/about">About Us</Link></li>
+            <li><Link className="active:text-orange-600 hover:font-semibold" href="/contact">Contact</Link></li>
+            <li><Link className="active:text-orange-600 hover:font-semibold" href="/privacy-policy">Privacy Policy</Link></li>
+            <li><Link className="active:text-orange-600 hover:font-semibold" href="/terms">Terms & Conditions</Link></li>
+            <li><Link className="active:text-orange-600 hover:font-semibold" href="/disclaimer">Disclaimer</Link></li>
           </ul>
         </div>
 
@@ -48,7 +48,7 @@ export default function Footer() {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-black"
+              className="hover:text-orange-600"
             >
               Twitter
             </a>
@@ -56,7 +56,7 @@ export default function Footer() {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-black"
+              className="hover:text-orange-600 "
             >
               Facebook
             </a>
@@ -64,7 +64,7 @@ export default function Footer() {
               href="https://youtube.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-black"
+              className="hover:text-orange-600"
             >
               YouTube
             </a>
