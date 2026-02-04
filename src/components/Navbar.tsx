@@ -4,14 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 const categoryItems: string[] = [
-  "बजट 2026",
+  "वाइरल",
   "भारत",
   "ऑटोमोबाईल",
   "टेक्नोलॉजी",
   "लाइफस्टाइल",
   "बिजनेस",
   "हेल्थ",
-  "क्रिकेट",
   "दुनिया",
   "एजुकेशन",
   "खेल",
