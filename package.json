@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint"
   },
@@ -16,6 +17,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.5",
     "next": "16.1.4",
+    "next-sitemap": "^4.2.3",
     "quill": "^2.0.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
