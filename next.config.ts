@@ -14,17 +14,6 @@ const nextConfig: NextConfig = {
         destination: "https://vasudhev.com/:path*",
         permanent: true,
       },
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "vasudhev.com",
-          },
-        ],
-        destination: "https://vasudhev.com/:path*",
-        permanent: true,
-      },
     ];
   },
 };
