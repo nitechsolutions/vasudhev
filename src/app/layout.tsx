@@ -19,9 +19,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vasudhev | हिन्दी न्यूज, Breaking News, Latest News, Top Headlines",
+  title: "Vasudhev | हिंदी न्यूज़, ताज़ा खबरें, ब्रेकिंग न्यूज़, Breaking News, Latest News, Top Headlines",
   description:
-    "Vasudhev Hindi News पर पढ़ें देश, दुनिया, बिज़नेस, टेक्नोलॉजी, हेल्थ, लाइफस्टाइल, दिल्ली, मुंबई, पुणे और राशिफल की ताज़ा खबरें।",
+    "Vasudhev पर पढ़ें भारत, दुनिया, राजनीति, टेक्नोलॉजी और बिज़नेस, हेल्थ, लाइफस्टाइल, दिल्ली, मुंबई, पुणे और राशिफल की ताज़ा खबरें।",
   keywords:
     "Vasudhev Hindi News, हिंदी न्यूज़, आज की खबरें, भारत समाचार, देश, दुनिया, बिज़नेस, टेक्नोलॉजी, हेल्थ, लाइफस्टाइल, दिल्ली, मुंबई, पुणे और राशिफल की ताज़ा खबरें।",
   metadataBase: new URL("https://vasudhev.com"),

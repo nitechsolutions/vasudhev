@@ -1,7 +1,10 @@
 User-agent: *
 Disallow: /includes/
+Disallow: /login
+Disallow: /dashboard
+Disallow: /admin
 
 User-agent: Googlebot
 Allow: /includes/
 
-Sitemap: https://yousite.com/sitemap.xml 
+Sitemap: https://vasudhev.com/sitemap.xml
