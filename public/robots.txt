@@ -1,8 +1,15 @@
 User-agent: *
 Disallow: /includes/
 Disallow: /login
+Disallow: /register
 Disallow: /dashboard
-Disallow: /admin
+Disallow: /dashboard/writer
+Disallow: /dashboard/writer/create
+Disallow: /dashboard/writer/edit
+Disallow: /dashboard/admin
+Disallow: /dashboard/horoscope
+Disallow: /dashboard/post
+Disallow: /dashboard/user
 
 User-agent: Googlebot
 Allow: /includes/

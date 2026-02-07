@@ -4,7 +4,6 @@ import { useRef, useState, useMemo, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import QuillEditor, { QuillEditorHandle } from "@/components/QuillEditor";
 
-
 /* ===============================
    Types
 ================================ */
@@ -38,7 +37,7 @@ export default function CreateBlogPage() {
   });
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [showPreview, setShowPreview] = useState<boolean>(false);
+  const [showPreview, setShowPreview] = useState(false);
 
   /* ===============================
      Quill Toolbar
@@ -67,28 +66,24 @@ export default function CreateBlogPage() {
     const { name, type, value } = e.target;
 
     if (type === "file") {
-      const input = e.target as HTMLInputElement;
-      const file = input.files?.[0] || null;
-
+      const file = (e.target as HTMLInputElement).files?.[0] || null;
       setForm((prev) => ({ ...prev, image: file }));
       if (file) setImagePreview(URL.createObjectURL(file));
       return;
     }
 
     if (type === "checkbox") {
-      const input = e.target as HTMLInputElement;
-      setForm((prev) => ({ ...prev, [name]: input.checked }));
+      setForm((prev) => ({
+        ...prev,
+        [name]: (e.target as HTMLInputElement).checked,
+      }));
       return;
     }
 
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  /* ===============================
-     Slug
-  ================================ */
-
-  function generateSlug(text: string): string {
+  function generateSlug(text: string) {
     return text
       .toLowerCase()
       .trim()
@@ -99,21 +94,13 @@ export default function CreateBlogPage() {
 
   function autoSlug() {
     if (!form.title) return;
-    setForm((prev) => ({
-      ...prev,
-      slug: generateSlug(prev.title),
-    }));
+    setForm((prev) => ({ ...prev, slug: generateSlug(prev.title) }));
   }
-
-  /* ===============================
-     Submit
-  ================================ */
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    const description =
-      editorHiRef.current?.getHTML() || "";
+    const description = editorHiRef.current?.getHTML() || "";
 
     const fd = new FormData();
     fd.append("title", form.title);
@@ -128,18 +115,11 @@ export default function CreateBlogPage() {
     fd.append(
       "tags",
       JSON.stringify(
-        form.tags
-          .split(",")
-          .map((t) => t.trim())
-          .filter(Boolean)
+        form.tags.split(",").map((t) => t.trim()).filter(Boolean)
       )
     );
 
-    const res = await fetch("/api/posts", {
-      method: "POST",
-      body: fd,
-    });
-
+    const res = await fetch("/api/posts", { method: "POST", body: fd });
     const json = await res.json();
 
     if (!res.ok) {
@@ -147,30 +127,25 @@ export default function CreateBlogPage() {
       return;
     }
 
-    alert("✅ पोस्ट सफलतापूर्वक प्रकाशित हो गया!");
+    alert("✅ पोस्ट प्रकाशित हो गया!");
     router.push("/dashboard/writer");
   }
 
-  const previewHTML =
-    editorHiRef.current?.getHTML() || "";
-
-  /* ===============================
-     Render
-  ================================ */
+  const previewHTML = editorHiRef.current?.getHTML() || "";
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">
+    <div className="max-w-5xl mx-auto p-4 sm:p-6">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
         नई पोस्ट लिखें
       </h1>
 
       <form className="space-y-5" onSubmit={handleSubmit}>
         {/* Title + Slug */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             className="input"
             name="title"
-            placeholder="शीर्षक (Hindi)"
+            placeholder="शीर्षक"
             value={form.title}
             onChange={handleChange}
           />
@@ -179,15 +154,11 @@ export default function CreateBlogPage() {
             <input
               className="input flex-1"
               name="slug"
-              placeholder="Slug (Hindi)"
+              placeholder="Slug"
               value={form.slug}
               onChange={handleChange}
             />
-            <button
-              type="button"
-              onClick={autoSlug}
-              className="btn-gray"
-            >
+            <button type="button" onClick={autoSlug} className="btn-gray">
               Auto
             </button>
           </div>
@@ -202,38 +173,19 @@ export default function CreateBlogPage() {
         >
           <option value="">श्रेणी चुनें</option>
           {[
-            "बजट 2026",
-            "भारत",
-            "वाइरल",
-            "ऑटोमोबाईल",
-            "टेक्नोलॉजी",
-            "लाइफस्टाइल",
-            "हेल्थ",
-            "बिजनेस",
-            "क्रिकेट",
-            "दुनिया",
-            "एजुकेशन",
-            "खेल",
-            "मनोरंजन",
+            "बजट 2026", "भारत", "वाइरल", "ऑटोमोबाईल", "टेक्नोलॉजी", "लाइफस्टाइल", "हेल्थ", "बिजनेस", "क्रिकेट", "दुनिया", "एजुकेशन", "खेल", "मनोरंजन",
           ].map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
+            <option key={c}>{c}</option>
           ))}
         </select>
 
         {/* Image */}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleChange}
-          className="input"
-        />
+        <input type="file" accept="image/*" onChange={handleChange} className="input" />
 
         {imagePreview && (
           <img
             src={imagePreview}
-            className="w-full rounded h-60 object-cover"
+            className="w-full h-48 sm:h-60 object-cover rounded"
           />
         )}
 
@@ -255,58 +207,46 @@ export default function CreateBlogPage() {
         />
 
         {/* Flags */}
-        <div className="flex gap-6">
-          <label>
-            <input
-              type="checkbox"
-              name="featured"
-              checked={form.featured}
-              onChange={handleChange}
-            />{" "}
+        <div className="flex flex-col sm:flex-row gap-4">
+          <label className="flex items-center gap-2">
+            <input type="checkbox" name="featured" checked={form.featured} onChange={handleChange} />
             Featured
           </label>
 
-          <label>
-            <input
-              type="checkbox"
-              name="trending"
-              checked={form.trending}
-              onChange={handleChange}
-            />{" "}
+          <label className="flex items-center gap-2">
+            <input type="checkbox" name="trending" checked={form.trending} onChange={handleChange} />
             Trending
           </label>
         </div>
 
-        <div className="flex justify-between">
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 sm:justify-between">
           <button
             type="button"
             onClick={() => setShowPreview(true)}
-            className="px-5 py-2 bg-gray-200 rounded"
+            className="w-full sm:w-auto px-5 py-2 bg-gray-200 rounded"
           >
             Preview
           </button>
 
           <button
             type="submit"
-            className="px-6 py-2 bg-indigo-600 text-white rounded"
+            className="w-full sm:w-auto px-6 py-2 bg-indigo-600 text-white rounded"
           >
             Publish
           </button>
         </div>
       </form>
 
+      {/* Preview Modal */}
       {showPreview && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
-          <div className="bg-white p-6 max-w-3xl rounded">
-            <h2 className="text-xl font-bold mb-4">
-              {form.title}
-            </h2>
-            <div
-              dangerouslySetInnerHTML={{ __html: previewHTML }}
-            />
+        <div className="fixed inset-0 bg-black/40 p-4 flex items-center justify-center z-50">
+          <div className="bg-white w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-bold mb-4">{form.title}</h2>
+            <div dangerouslySetInnerHTML={{ __html: previewHTML }} />
             <button
               onClick={() => setShowPreview(false)}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded w-full sm:w-auto"
             >
               Close
             </button>
@@ -315,8 +255,17 @@ export default function CreateBlogPage() {
       )}
 
       <style>{`
-        .input { padding:10px; border:1px solid #ddd; border-radius:6px; width:100%; }
-        .btn-gray { padding:8px 14px; background:#eee; border-radius:6px; }
+        .input {
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          width: 100%;
+        }
+        .btn-gray {
+          padding: 8px 14px;
+          background: #eee;
+          border-radius: 6px;
+        }
       `}</style>
     </div>
   );
