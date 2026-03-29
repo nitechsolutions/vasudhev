@@ -1,6 +1,6 @@
-import { getCurrentUserWithRole } from "@/lib/service/auth.service";
 import { redirect } from "next/navigation";
 import SignupPage from "./page";
+import { getUserWithRole } from "@/lib/service/auth.server";
 
 export const metadata = {
   robots: {
@@ -10,7 +10,7 @@ export const metadata = {
 };
 
 export default async function SignupLayout() {
-  const data = await getCurrentUserWithRole();
+  const data = await getUserWithRole();
 
   /* 🔥 IF LOGGED IN → REDIRECT */
   if (data) {

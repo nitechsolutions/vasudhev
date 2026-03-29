@@ -18,9 +18,7 @@ export async function createServerSupabaseClient() {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
             );
-          } catch (error){
-            console.log("server Error", error);
-            
+          } catch{
             /*
              This happens when called from a Server Component.
              In that case cookies cannot be modified.
