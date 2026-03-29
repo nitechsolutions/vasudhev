@@ -1,6 +1,6 @@
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createServerSupabaseClient } from "../supabase/server";
 
-export async function getCurrentUserWithRole() {
+export async function getUserWithRole() {
   const supabase = await createServerSupabaseClient();
 
   const {
@@ -20,3 +20,4 @@ export async function getCurrentUserWithRole() {
     role: profile?.role,
   };
 }
+
