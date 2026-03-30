@@ -1,7 +1,11 @@
 import { createServerSupabaseClient } from "../supabase/server";
 
+type CategoryItem = {
+  name: string;
+  slug: string;
+};
 
-export async function getCategoriesByLang(lang: string) {
+export async function getCategoriesByLang(lang: string) : Promise<CategoryItem[]> {
   const supabase = await createServerSupabaseClient();
 
   const { data } = await supabase

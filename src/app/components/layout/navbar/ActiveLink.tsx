@@ -23,7 +23,7 @@ export default function ActiveLink({
       href={href}
       className={`pb-1 transition-colors ${
         isActive
-          ? "text-red-600 border-b-2 border-red-600"
+          ? "text-red-600 border-b-2 font-semibold border-red-600"
           : "hover:text-red-600"
       }`}
     >
