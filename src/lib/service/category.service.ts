@@ -3,6 +3,8 @@ import { createServerSupabaseClient } from "../supabase/server";
 type CategoryItem = {
   name: string;
   slug: string;
+  language_code: string;
+  emoji: string;
 };
 
 export async function getCategoriesByLang(lang: string) : Promise<CategoryItem[]> {
@@ -18,5 +20,5 @@ export async function getCategoriesByLang(lang: string) : Promise<CategoryItem[]
     `)
     .eq("language_code", lang);
 
-  return data;
+  return data ?? [];
 }
