@@ -1,28 +1,41 @@
-import { getUserWithRole } from "@/lib/service/auth.server";
-import Link from "next/link";
+// app/(default)/page.tsx
+
+import { getHomeData } from "@/lib/service/homeData.service";
+import FeaturedSection from "./components/home/FeaturedSection";
+import CategorySection from "./components/home/CategorySection";
+import { getDefaultLanguage } from "@/lib/service/language.service";
 
 
 export default async function Home() {
-const data = await getUserWithRole();
+
+  const lang = await getDefaultLanguage();
+  console.log("homelang", lang.code);
+
+  const { featured, trending, categoryData } =
+    await getHomeData(lang.code);
 
   return (
-    <div className="flex flex-col flex-1 items-center justify-center  font-sans ">
-      Home Page
-      {!data?.user && (
-        <>
-          <Link href="/login">Login</Link>
-          <Link href="/signup">Signup</Link>
-        </>
-      )}
+    <main className="max-w-6xl mx-auto px-4 py-6  grid lg:grid-cols-3 gap-8">
+      <FeaturedSection posts={featured} lang={lang.code} defaultLang={lang.code} />
 
-      {data?.user && (
-        <form action="/auth/signout" method="post">
-          <button className="bg-red-500 text-white px-4 py-2 rounded ">
-            Sign Out
-          </button>
-        </form>
-      )}
+      <CategorySection
+        title="Trending"
+        emoji="🔥"
+        posts={trending}
+        lang={lang.code}
+        defaultLang={lang.code}
+      />
 
-    </div>
+      {categoryData.map((cat) => (
+        <CategorySection
+          key={cat.slug}
+          emoji={cat.emoji}
+          title={cat.name}
+          posts={cat.posts}
+          lang={lang.code}
+          defaultLang={lang.code}
+        />
+      ))}
+    </main>
   );
 }

@@ -33,7 +33,7 @@ export default function MobileMenu({
 
   const toggle = () => setOpen(!open);
 
-  console.log(user);
+//   console.log(user);
   
 
   return (
