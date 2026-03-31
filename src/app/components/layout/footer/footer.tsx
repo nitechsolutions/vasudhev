@@ -17,7 +17,7 @@ export default async function Footer({ lang }: { lang: string }) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-200 text-gray-800 fixed bottom-0 mt-16">
+    <footer className="bg-gray-200 text-gray-800 ">
       <div className="max-w-6xl mx-auto px-4 py-12 grid md:grid-cols-4 gap-10">
         {/* ✅ ABOUT */}
         <div>

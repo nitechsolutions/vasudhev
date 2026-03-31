@@ -31,11 +31,16 @@ export default async function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      {/* <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX"
+        crossOrigin="anonymous"
+      ></script> */}
       <body className="w-full items-center flex flex-col">
         <Navbar lang={data.code} />
-         <main className="flex-1">{children}</main>
+        <main className="flex-1">{children}</main>
         <Footer lang={data.code} />
-        </body>
+      </body>
     </html>
   );
 }
