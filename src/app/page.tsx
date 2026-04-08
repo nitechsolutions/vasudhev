@@ -22,8 +22,6 @@ export default async function Home() {
         title="Trending"
         emoji="🔥"
         posts={trending}
-        lang={lang.code}
-        defaultLang={lang.code}
       />
 
       {categoryData.map((cat) => (
@@ -32,8 +30,6 @@ export default async function Home() {
           emoji={cat.emoji}
           title={cat.name}
           posts={cat.posts}
-          lang={lang.code}
-          defaultLang={lang.code}
         />
       ))}
     </main>

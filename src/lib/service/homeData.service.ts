@@ -1,7 +1,8 @@
 // lib/services/getHomeData.ts
 
 import { createServerSupabaseClient } from "../supabase/server";
-import { CategoryData, HomeData, PostItem } from "../types/post";
+import { PostCard } from "../types/blog.types";
+import { CategoryData, HomeData } from "../types/post";
 import { getDefaultLanguage } from "./language.service";
 
 export async function getHomeData(lang?: string):Promise<HomeData> {
@@ -19,7 +20,7 @@ export async function getHomeData(lang?: string):Promise<HomeData> {
     .select("id, slug, name, emoji")
     .eq("language_code", languageCode);
 
-  const format = (rows: any[] | null): PostItem[] =>
+  const format = (rows: any[] | null): PostCard[] =>
     (rows || []).map((post) => ({
       title: post.post_translations?.[0]?.title,
       slug: post.post_translations?.[0]?.slug,
