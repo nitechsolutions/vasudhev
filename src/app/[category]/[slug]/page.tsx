@@ -24,15 +24,47 @@ export const revalidate = 60;
 /* -------- METADATA -------- */
 export async function generateMetadata({ params }: Props) {
   const language = await getDefaultLanguage();
-
   const lang = language.code;
-  const { slug } = await params;
+
+  const { slug, category } = await params;
 
   const post = await getBlogData(slug, lang);
 
+  if (!post) return {};
+
+  const url = `https://vasudhev.com/${category}/${slug}`;
+
   return {
     title: post?.meta_title || post?.title,
+
     description: post?.meta_description || "",
+
+    alternates: {
+      canonical: url,
+    },
+
+    openGraph: {
+      title: post?.meta_title || post?.title,
+      description: post?.meta_description || "",
+      url,
+      siteName: "Your Blog Name",
+      images: [
+        {
+          url: post?.image,
+          width: 1200,
+          height: 630,
+        },
+      ],
+      locale: "en_IN",
+      type: "article",
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: post?.meta_title || post?.title,
+      description: post?.meta_description || "",
+      images: [post?.image],
+    },
   };
 }
 
@@ -51,13 +83,13 @@ export default async function BlogPage({ params }: Props) {
   const related = await getRelatedPosts(category, lang, slug);
   const trending = await getTrendingPosts(lang);
 
-  const url = `https://yoursite.com/${category}/${slug}`;
+  const url = `https://vasudhev.com/${category}/${slug}`;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6 ">
+    <div className="max-w-6xl mx-auto px-4 py-6">
       <div className="grid lg:grid-cols-3 gap-10">
         {/* MAIN */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 max-w-none">
           <BlogHeader post={post} lang={lang} />
           <BlogAuthor post={post} />
           <BlogShare url={url} />
@@ -65,8 +97,8 @@ export default async function BlogPage({ params }: Props) {
         </div>
 
         {/* SIDEBAR */}
-        <aside className="hidden lg:block">
-          <section>
+        <aside className="hidden lg:block ">
+          <section className="top-20 sticky">
             <div>
               <h2 className="text-xl font-bold mb-2 capitalize flex items-center justify-between gap-2 border-b-2 pb-2 border-orange-400 text-orange-600">
                 🔥 Trending
@@ -77,9 +109,10 @@ export default async function BlogPage({ params }: Props) {
             </div>
 
             {trending.map((post) => (
-                <Link key={post.slug} href={`/${post.category}/${post.slug}`} className="flex gap-3 mb-3">
+                <Link key={post.slug} href={`/${post.category}/${post.slug}`} className="flex gap-3 mb-3 ">
                   <img
                     src={post.image}
+                    alt={post.slug} 
                     className="w-24 h-16 object-cover rounded"
                   />
                   <p className="hover:text-red-600 transition font-semibold">

@@ -10,8 +10,8 @@ export default function BlogHeader({ post, lang }: propsType) {
   return (
     <>
       <nav className="text-sm text-gray-500 mb-4">
-        <Link href={`/`}>Home</Link> /{" "}
-        <Link href={`/${post.category}`}>{post.category}</Link> /{" "}
+        <Link href={`/`} className="hover:text-red-500 active:text-red-500">home</Link> /{" "}
+        <Link href={`/${post.category}`} className="hover:text-red-500 active:text-red-500">{post.category}</Link> /{" "}
         <span className="text-black">{post.slug}</span>
       </nav>
 
