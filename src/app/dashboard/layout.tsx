@@ -1,4 +1,6 @@
-import { requireDashboardAccess } from "@/lib/service/auth.guard";
+import { redirect } from "next/navigation";
+import Sidebar from "../components/dashboard/Sidebar";
+import { getUserWithRole } from "@/lib/service/auth.server";
 
 export const metadata = {
   robots: {
@@ -12,12 +14,19 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const user = await getUserWithRole();
 
- await requireDashboardAccess();
+  if (!user) {
+    redirect("/login");
+  }
 
   return (
-    <div className="min-h-screen flex">
-      <main className="flex-1 p-8">{children}</main>
+    <div className="min-h-screen flex w-full">
+      <Sidebar user={user} />
+
+      <main className="flex-1 p-6 md:p-8 bg-gray-50 overflow-y-auto">
+        {children}
+      </main>
     </div>
   );
 }

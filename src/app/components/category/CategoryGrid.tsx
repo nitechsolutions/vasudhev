@@ -13,17 +13,17 @@ export default function CategoryGrid({
       {posts.map((post) => (
         <Link
           key={post.slug}
-          href={`/${lang}/${post.category}/${post.slug}`}
+          href={`/${post.category}/${post.slug}`}
           className="group"
         >
           {post.image && (
             <img
               src={post.image}
-              className="w-full h-32 object-cover rounded mb-3 group-hover:opacity-90 transition"
+              className="w-full  object-cover rounded mb-3 group-hover:opacity-90 transition"
             />
           )}
 
-          <h2 className="font-semibold text-md group-hover:text-red-600 transition">
+          <h2 className="font-semibold text-md group-hover:text-red-600 group-active:text-red-600 transition">
             {post.title}
           </h2>
 

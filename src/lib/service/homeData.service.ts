@@ -38,6 +38,7 @@ export async function getHomeData(lang?: string):Promise<HomeData> {
     `)
     .eq("featured", true)
     .eq("post_translations.language", languageCode)
+    .order('created_at', { ascending: false })
     .limit(4);
 
   const { data: trendingRaw } = await supabase

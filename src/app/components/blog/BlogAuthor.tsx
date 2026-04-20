@@ -14,12 +14,13 @@ export default function BlogAuthor({ post }: Props) {
     <div className="flex items-center gap-4 mb-6">
       <img
         src={author?.profile_url || "/default-avatar.png"}
-        className="h-12 w-12 rounded-full"
+        alt="auther"
+        className="h-8 w-8 rounded-full"
       />
 
       <div>
         <div className="flex items-center gap-2">
-          <p className="font-semibold text-sm">
+          <p className="font-semibold text-xs">
             {author?.full_name}
           </p>
 
