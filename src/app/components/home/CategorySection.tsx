@@ -17,7 +17,7 @@ export default function CategorySection({
 }: CategorySectionProps) {
   if (!posts?.length) return null;
 
-  console.log("post",posts);
+  // console.log("post",posts);
   
 
   return (

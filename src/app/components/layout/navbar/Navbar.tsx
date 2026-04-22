@@ -13,7 +13,9 @@ type CategoryItem = {
 export default async function Navbar({ lang }: { lang: string }) {
   const data = await getUserWithRole();
 
-  const currentLang = lang;  
+  console.log(data?.role);
+
+  const currentLang = lang;
 
   const categories = await getCategoriesByLang(currentLang);
 
@@ -22,7 +24,6 @@ export default async function Navbar({ lang }: { lang: string }) {
   return (
     <header className="w-full sticky top-0 z-50 bg-white ">
       <div className="max-w-6xl shadow mx-auto h-14 px-4 flex items-center justify-between">
-
         {/* ✅ LOGO */}
         <Link href={prefix || "/"} className="flex items-center">
           <Image
@@ -49,7 +50,6 @@ export default async function Navbar({ lang }: { lang: string }) {
 
         {/* ✅ RIGHT SIDE */}
         <div className="flex items-center gap-3">
-
           {/* Desktop Auth */}
           <div className="hidden md:flex items-center gap-2">
             {!data?.user && (
@@ -63,12 +63,16 @@ export default async function Navbar({ lang }: { lang: string }) {
 
             {data?.user && (
               <>
-                <Link
-                  className="text-sm px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700"
-                  href="/dashboard"
-                >
-                  Dashboard
-                </Link>
+                {data.role === "reader" ? (
+                  <> </>
+                ) : (
+                  <Link
+                    className="text-sm px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700"
+                    href="/dashboard"
+                  >
+                    Dashboard
+                  </Link>
+                )}
 
                 <form action="/auth/signout" method="post">
                   <button className="bg-red-500 text-sm text-white px-4 py-2 rounded">
@@ -85,6 +89,7 @@ export default async function Navbar({ lang }: { lang: string }) {
             categories={categories}
             currentLang={currentLang}
             user={data?.user ?? null}
+            role={data?.user.role ?? null}
           />
         </div>
       </div>

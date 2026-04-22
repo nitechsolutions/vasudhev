@@ -9,7 +9,7 @@ import { getDefaultLanguage } from "@/lib/service/language.service";
 export default async function Home() {
 
   const lang = await getDefaultLanguage();
-  console.log("homelang", lang.code);
+  // console.log("homelang", lang.code);
 
   const { featured, trending, categoryData } =
     await getHomeData(lang.code);

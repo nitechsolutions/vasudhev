@@ -34,7 +34,7 @@ export default async function CategoryPage({
     limit: POSTS_PER_PAGE,
   });
 
-  console.log(category);
+//   console.log(category);
 
   const trending = await getTrendingPosts(lang);
 
