@@ -16,12 +16,12 @@ export default async function DashboardLayout({
 }) {
   const user = await getUserWithRole();
 
-  if (!user) {
-    redirect("/login");
-  }
+ if (!user || user.role === "reader") {
+  redirect("/login");
+}
 
   return (
-    <div className="min-h-screen flex w-full">
+    <div className="min-h-screen flex w-6xl">
       <Sidebar user={user} />
 
       <main className="flex-1 p-6 md:p-8 bg-gray-50 overflow-y-auto">

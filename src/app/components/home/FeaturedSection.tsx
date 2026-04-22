@@ -19,7 +19,7 @@ export default function FeaturedSection({
 
   const post = posts[0];
 
-  console.log("featured",posts);
+  // console.log("featured",posts);
   
 
   const url = buildPostUrl(lang, post.category, post.slug, defaultLang);

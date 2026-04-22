@@ -21,6 +21,7 @@ type Props = {
   categories: CategoryItem[];
   currentLang: string;
   user: UserType;
+  role: string | null;
 };
 
 export default function MobileMenu({
@@ -28,13 +29,13 @@ export default function MobileMenu({
   categories,
   currentLang,
   user,
+  role
 }: Props) {
   const [open, setOpen] = useState(false);
 
   const toggle = () => setOpen(!open);
 
-//   console.log(user);
-  
+  //   console.log(user);
 
   return (
     <>
@@ -47,7 +48,6 @@ export default function MobileMenu({
       {open && (
         <div className="absolute top-14 left-0 w-full bg-white border-t shadow-md md:hidden z-50">
           <div className="flex flex-col p-4 gap-4 text-sm font-medium">
-
             {/* Home */}
             <Link href={prefix || "/"} onClick={toggle}>
               {currentLang === "en" ? "Home" : "होम"}
@@ -80,21 +80,22 @@ export default function MobileMenu({
             )}
 
             {user && (
-              <div className="flex flex-col gap-2">
-                <Link
-                  href="/dashboard"
-                  onClick={toggle}
-                  className="bg-green-600 text-white px-3 py-2 rounded text-center"
-                >
-                  Dashboard
-                </Link>
+              <>
+                {role === "reader" && (
+                  <Link
+                    className="text-sm px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700"
+                    href="/dashboard"
+                  >
+                    Dashboard
+                  </Link>
+                )}
 
                 <form action="/auth/signout" method="post">
-                  <button className="w-full bg-red-500 text-white px-3 py-2 rounded">
+                  <button className="bg-red-500 text-sm text-white px-4 py-2 rounded">
                     Sign Out
                   </button>
                 </form>
-              </div>
+              </>
             )}
           </div>
         </div>

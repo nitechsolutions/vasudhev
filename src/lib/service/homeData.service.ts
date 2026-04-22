@@ -12,7 +12,7 @@ export async function getHomeData(lang?: string):Promise<HomeData> {
 
   const languageCode = lang || defaultLang
 
-  console.log("language", languageCode);
+  // console.log("language", languageCode);
   
 
   const { data: categories } = await supabase

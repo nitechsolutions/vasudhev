@@ -17,7 +17,7 @@ export async function getUserWithRole() {
 
   return {
     user,
-    role: profile?.role,
+    role: profile?.role ?? "reader",
   };
 }
 
