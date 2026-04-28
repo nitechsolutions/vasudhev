@@ -106,7 +106,7 @@ export default async function PostsPage() {
 
                 {/* ACTIONS */}
                 <Link
-                  href={`/dashboard/posts/${post.id}/edit`}
+                  href={`/dashboard/posts/edit/${post.id}`}
                   className="text-blue-600 text-sm"
                 >
                   Edit

@@ -1,18 +1,13 @@
 "use client";
 
-import {
-  useRef,
-  useState,
-  useMemo,
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-} from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import QuillEditor, {
   QuillEditorHandle,
 } from "@/app/components/dashboard/RichTextEditor";
 import { supabase } from "@/lib/supabase/client";
+import SlugInput from "@/app/components/dashboard/SlugInput";
+import ImageUpload from "@/app/components/dashboard/ImageUpload";
 
 interface Category {
   id: string;
@@ -43,16 +38,18 @@ export default function CreateBlogPage() {
   const [language, setLanguage] = useState("en");
 
   const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
+
   const [metaTitle, setMetaTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
 
-
   const [featured, setFeatured] = useState(false);
   const [trending, setTrending] = useState(false);
 
-    const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -95,41 +92,14 @@ export default function CreateBlogPage() {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)+/g, "");
 
-   const handleImageUpload = async (file: File) => {
-  try {
-    setUploading(true);
-
-    alert("Uploading image...");
-
-    const fileExt = file.name.split(".").pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-
-    const { error } = await supabase.storage
-      .from("blog-images")
-      .upload(fileName, file);
-
-    if (error) {
-      alert("Image Upload Failed: " + error.message);
-      setUploading(false);
-      return;
-    }
-
-    const { data } = supabase.storage
-      .from("blog-images")
-      .getPublicUrl(fileName);
-
-    setImageUrl(data.publicUrl);
-
-    alert("Image uploaded successfully!");
-  } catch (err) {
-    alert("Something went wrong while uploading image.");
-  } finally {
-    setUploading(false);
-  }
-};
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!title || !slug) {
+      alert("Title and slug required");
+      return;
+    }
 
     try {
       setLoading(true);
@@ -180,11 +150,11 @@ export default function CreateBlogPage() {
           language,
           title,
           meta_title: metaTitle,
-          slug: generateSlug(title),
+          slug,
           excerpt,
           meta_description: metaDescription,
           content,
-          image: imageUrl,
+          image: image,
           // meta_keywords: metaKeywords,
         });
 
@@ -242,6 +212,8 @@ export default function CreateBlogPage() {
           required
         />
 
+        <SlugInput title={title} value={slug} onChange={setSlug} />
+
         <input
           type="text"
           placeholder="Meta Title"
@@ -250,21 +222,19 @@ export default function CreateBlogPage() {
           className="border p-2 w-full"
         />
 
-         <textarea
-        placeholder="Short summary"
-        value={excerpt}
-        onChange={(e) => setExcerpt(e.target.value)}
-        className="border p-2 w-full"
-      />
+        <textarea
+          placeholder="Short summary"
+          value={excerpt}
+          onChange={(e) => setExcerpt(e.target.value)}
+          className="border p-2 w-full"
+        />
 
-       <textarea
-        placeholder="Meta Description"
-        value={metaDescription}
-        onChange={(e) => setMetaDescription(e.target.value)}
-        className="border p-2 w-full"
-      />
-
-       
+        <textarea
+          placeholder="Meta Description"
+          value={metaDescription}
+          onChange={(e) => setMetaDescription(e.target.value)}
+          className="border p-2 w-full"
+        />
 
         <QuillEditor
           ref={editorRef}
@@ -272,15 +242,7 @@ export default function CreateBlogPage() {
           modules={modules}
           placeholder="लेख लिखें..."
         />
-        <input
-        type="file"
-        accept="image/*"
-        className="file:bg-gray-500 file:p-2  mt-6 border rounded"
-        onChange={(e) => e.target.files && handleImageUpload(e.target.files[0])}
-      />
-
-      {uploading && <p>Uploading image...</p>}
-      {imageUrl && <img src={imageUrl} className="w-40 mt-2 rounded" />}
+        <ImageUpload value={image} onChange={setImage} />
 
         <div className="flex gap-4">
           <label>
@@ -301,8 +263,6 @@ export default function CreateBlogPage() {
             Trending
           </label>
         </div>
-
-
 
         <button className="bg-black text-white px-6 py-2">
           {loading ? "Publishing..." : "Publish Post"}
