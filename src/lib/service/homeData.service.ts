@@ -39,7 +39,7 @@ export async function getHomeData(lang?: string):Promise<HomeData> {
     .eq("featured", true)
     .eq("post_translations.language", languageCode)
     .order('created_at', { ascending: false })
-    .limit(4);
+    .limit(1);
 
   const { data: trendingRaw } = await supabase
     .from("posts")
@@ -50,6 +50,7 @@ export async function getHomeData(lang?: string):Promise<HomeData> {
     `)
     .eq("trending", true)
     .eq("post_translations.language", languageCode)
+    .order('created_at', { ascending: false })
     .limit(4);
 
   const categoryData: CategoryData[] = await Promise.all(
@@ -63,6 +64,7 @@ export async function getHomeData(lang?: string):Promise<HomeData> {
         `)
         .eq("categories.slug", cat.slug)
         .eq("post_translations.language", languageCode)
+        .order('created_at', { ascending: false })
         .limit(4);
 
       return {
