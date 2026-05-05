@@ -1,12 +1,15 @@
+
 import Link from "next/link";
 import { getPosts } from "@/lib/service/dashboard.service";
+import DeleteButton from "@/app/components/dashboard/DeleteButton";
+
 type Post = {
   id: string;
   status: string;
   published_at: string | null;
   created_at: string;
 
-  categories: { name: string }| null;
+  categories: { name: string } | null;
 
   post_translations: {
     title: string;
@@ -18,8 +21,6 @@ type Post = {
 
 export default async function PostsPage() {
   const posts = await getPosts();
-
-//   console.log("POST:", posts);
 
   if (!posts) {
     return <p className="text-red-500">Error loading posts</p>;
@@ -63,7 +64,7 @@ export default async function PostsPage() {
                   <img
                     src={translation.image}
                     alt={translation.title}
-                    className="w-16 h-16 object-cover rounded-md"
+                    className=" h-16 object-cover rounded-md"
                   />
                 ) : (
                   <div className="w-16 h-16 bg-gray-200 rounded-md" />
@@ -111,6 +112,7 @@ export default async function PostsPage() {
                 >
                   Edit
                 </Link>
+                <DeleteButton postId={post.id} />
               </div>
             </div>
           );
