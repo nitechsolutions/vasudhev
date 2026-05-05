@@ -15,7 +15,7 @@ export default function BlogContent({ post }: Props) {
         />
       )}
       <div
-        className="prose lg:prose-lg max-w-none"
+        className="prose lg:prose-lg max-w-none mt-10"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
     </>

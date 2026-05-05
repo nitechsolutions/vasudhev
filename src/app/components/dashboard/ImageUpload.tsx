@@ -15,7 +15,7 @@ export default function ImageUpload({ value, onChange }: Props) {
   // ✅ Validation
   const validateFile = (file: File) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-    const maxSize = 2 * 1024 ; // 200kb
+    const maxSize = 2 * 1024 * 1024; // 200kb
 
     if (!allowedTypes.includes(file.type)) {
       return "Only JPG, PNG, WEBP allowed";

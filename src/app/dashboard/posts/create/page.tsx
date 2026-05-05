@@ -35,7 +35,7 @@ export default function CreateBlogPage() {
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryId, setCategoryId] = useState("");
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("hi");
 
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
@@ -47,8 +47,6 @@ export default function CreateBlogPage() {
   const [featured, setFeatured] = useState(false);
   const [trending, setTrending] = useState(false);
 
-  const [imageUrl, setImageUrl] = useState("");
-  const [uploading, setUploading] = useState(false);
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -85,12 +83,6 @@ export default function CreateBlogPage() {
     }),
     [],
   );
-
-  const generateSlug = (text: string) =>
-    text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)+/g, "");
 
 
   const handleSubmit = async (e: React.FormEvent) => {

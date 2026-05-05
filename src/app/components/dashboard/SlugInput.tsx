@@ -19,7 +19,7 @@ type Props = {
 }
 
 export default function SlugInput({ title, value, onChange }: Props) {
-  const [isAuto, setIsAuto] = useState(true);
+  const [isAuto, setIsAuto] = useState(false);
 
   // Auto update when title changes
   useEffect(() => {
