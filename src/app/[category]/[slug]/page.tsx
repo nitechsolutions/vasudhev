@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: Props) {
   const { slug, category } = await params;
 
   if (
-  params.category === "sitemap.xml" ||
-  params.category === "robots.txt"
+  category === "sitemap.xml" ||
+  category === "robots.txt"
 ) {
   return notFound();
 }
