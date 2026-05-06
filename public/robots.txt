@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /login
+Disallow: /register
+Disallow: /dashboard/
+Disallow: /dashboard/posts/
+Disallow: /dashboard/posts/create/
+Disallow: /dashboard/posts/edit/
+
+Allow: /
+
+Sitemap: https://vasudhev.com/sitemap.xml

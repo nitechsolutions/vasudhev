@@ -43,11 +43,21 @@ export async function generateMetadata({ params }: Props) {
       canonical: url,
     },
 
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+      },
+    },
+
     openGraph: {
       title: post?.meta_title || post?.title,
       description: post?.meta_description || "",
-      url,
-      siteName: "Your Blog Name",
+      url: `https://vasudhev.com/${category}/${post.slug}`,
+      siteName: "Vasudhev Finance, Tech and Auto Blog",
       images: [
         {
           url: post?.image,
@@ -65,6 +75,11 @@ export async function generateMetadata({ params }: Props) {
       description: post?.meta_description || "",
       images: [post?.image],
     },
+    keywords: [
+      post.meta_title,
+      post.category,
+      post.meta_description
+    ],
   };
 }
 
@@ -86,7 +101,29 @@ export default async function BlogPage({ params }: Props) {
   const url = `https://vasudhev.com/${category}/${slug}`;
 
   return (
+
     <div className="max-w-6xl mx-auto px-4 py-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            description: post.excerpt,
+            image: post.image,
+            author: {
+              "@type": "Person",
+              name: "Auther",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "Vasudhev",
+            },
+            datePublished: post.published_at,
+          }),
+        }}
+      />
       <div className="grid lg:grid-cols-3 gap-10">
         {/* MAIN */}
         <div className="lg:col-span-2 max-w-none">
