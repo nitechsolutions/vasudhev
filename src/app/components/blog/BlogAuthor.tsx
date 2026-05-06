@@ -1,6 +1,4 @@
 import { BlogPost } from "@/lib/types/blog.types";
-import Image from "next/image";
-// import verifiedIcon from "@/assets/verified.png";
 
 
 interface Props {
