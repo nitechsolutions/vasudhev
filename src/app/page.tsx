@@ -8,10 +8,9 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://vasudhev.com"),
-  title: {
-    default: "Vasudhev - Money Investment Guideline, Earn Money, Tech, Auto & Finance Blogs in Hindi",
-    template: "%s | Vasudhev",
-  },
+  title: "Vasudhev - Money Investment Guideline, Earn Money, Tech, Auto & Finance Blogs in Hindi",
+    
+  
   description:
     "Vasudhev.com पर पढ़ें Tech, Auto और Finance से जुड़े आसान और उपयोगी ब्लॉग। Electric Cars, Bikes, SIP Investment, Loans और बहुत कुछ हिंदी में।",
 
