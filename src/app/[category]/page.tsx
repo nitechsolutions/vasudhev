@@ -6,7 +6,8 @@ import CategoryGrid from "../components/category/CategoryGrid";
 import Pagination from "../components/category/Pagination";
 import { getDefaultLanguage } from "@/lib/service/language.service";
 import CategorySection from "../components/home/CategorySection";
-import { ArrowBigRight } from 'lucide-react';
+import { ArrowBigRight } from "lucide-react";
+import { notFound } from "next/navigation";
 const POSTS_PER_PAGE = 8;
 
 export const revalidate = 60;
@@ -19,6 +20,9 @@ export default async function CategoryPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   const { category } = await params;
+  if (category === "sitemap.xml" || category === "robots.txt") {
+    return notFound();
+  }
   const { page } = await searchParams;
 
   const language = await getDefaultLanguage();
@@ -34,7 +38,7 @@ export default async function CategoryPage({
     limit: POSTS_PER_PAGE,
   });
 
-//   console.log(category);
+  //   console.log(category);
 
   const trending = await getTrendingPosts(lang);
 
@@ -46,8 +50,10 @@ export default async function CategoryPage({
         {/* MAIN */}
         <div className="lg:col-span-2">
           {/* <CategoryHeader category={category} /> */}
-          <h1 className={`text-3xl font-bold mb-8 capitalize border-b-2 pb-2 flex gap-2 items-center text-orange-600`} >
-            {category}   {<ArrowBigRight strokeWidth={3} />}
+          <h1
+            className={`text-3xl font-bold mb-8 capitalize border-b-2 pb-2 flex gap-2 items-center text-orange-600`}
+          >
+            {category} {<ArrowBigRight strokeWidth={3} />}
           </h1>
           <CategoryGrid posts={posts} lang={lang} />
 
@@ -61,11 +67,7 @@ export default async function CategoryPage({
 
         {/* SIDEBAR */}
         <aside className="hidden lg:block">
-          <CategorySection
-            posts={trending}
-            emoji="🔥"
-            title="Trending"
-          />
+          <CategorySection posts={trending} emoji="🔥" title="Trending" />
         </aside>
       </div>
     </div>
