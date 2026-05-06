@@ -20,7 +20,16 @@ export default async function CategoryPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   const { category } = await params;
-   
+   const blocked = [
+  "sitemap.xml",
+  "robots.txt",
+  "ads.txt",
+  "favicon.ico",
+];
+
+if (blocked.includes(category)) {
+  throw new Error("Blocked system route");
+}
   const { page } = await searchParams;
 
   const language = await getDefaultLanguage();
