@@ -20,9 +20,7 @@ export default async function CategoryPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   const { category } = await params;
-  if (category === "sitemap.xml" || category === "robots.txt") {
-    return notFound();
-  }
+   
   const { page } = await searchParams;
 
   const language = await getDefaultLanguage();
