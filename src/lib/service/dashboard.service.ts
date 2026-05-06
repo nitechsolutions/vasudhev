@@ -4,6 +4,7 @@ type Post = {
   status: string;
   published_at: string | null;
   created_at: string;
+  updated_at: string;
 
   categories: { name: string, slug: string }| null;
 
@@ -85,6 +86,7 @@ export async function getPosts(): Promise<Post[]> {
       status,
       published_at,
       created_at,
+      updated_at,
       categories (name, slug),
       post_translations (
         title,
