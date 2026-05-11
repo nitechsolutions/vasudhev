@@ -13,8 +13,6 @@ type CategoryItem = {
 export default async function Navbar({ lang }: { lang: string }) {
   const data = await getUserWithRole();
 
-  console.log(data?.role);
-
   const currentLang = lang;
 
   const categories = await getCategoriesByLang(currentLang);

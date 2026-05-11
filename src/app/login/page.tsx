@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { loginUser } from "@/lib/service/auth.client";
 
 export default function LoginPage() {
@@ -10,20 +10,21 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-   const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const { role } = await loginUser(email, password);
+      const data = await loginUser(email, password);
 
-      if (role === "admin" || role === "author") {
-        router.push("/dashboard");
+      console.log("LOGIN DATA:", data);
+
+      if (data.role === "author") {
+        router.replace("/dashboard");
       } else {
-        router.push("/");
+        router.replace("/");
       }
-
-      router.refresh();
     } catch (err: any) {
+      console.error(err);
       alert(err.message);
     }
   };
@@ -48,7 +49,7 @@ export default function LoginPage() {
         required
       />
 
-      <button className="bg-black text-white px-4 py-2 w-full">
+      <button type="submit" className="bg-black text-white px-4 py-2 w-full">
         Login
       </button>
     </form>

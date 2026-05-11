@@ -2,16 +2,6 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function updateSession(request: NextRequest) {
-    const { pathname } = request.nextUrl;
-
-  // ✅ ALWAYS allow system routes FIRST
-  if (
-    pathname === "/sitemap.xml" ||
-    pathname === "/robots.txt" ||
-    pathname === "/ads.txt"
-  ) {
-    return NextResponse.next();
-  }
 
   let supabaseResponse = NextResponse.next({
     request,
@@ -44,6 +34,9 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  console.log(user);
+  
+    const { pathname } = request.nextUrl;
 
 
   /* 🔥 BLOCK LOGIN & SIGNUP */
