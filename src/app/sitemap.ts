@@ -1,39 +1,16 @@
 import type { MetadataRoute } from "next";
-import { siteConfig } from "@/lib/seo/seo";
 import { getPosts } from "@/lib/service/dashboard.service";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+
   const posts = await getPosts();
 
-  const postUrls: MetadataRoute.Sitemap = posts
-    .filter(
-      (post) =>
-        post.categories?.slug &&
-        post.post_translations?.length
-    )
-    .flatMap((post) =>
-      post.post_translations.map((translation) => ({
-        url: `${siteConfig.url}/blog/${translation.slug}`,
-
-        lastModified: new Date(post.updated_at),
-
-        changeFrequency: "weekly" as const,
-
-        priority: 0.7,
-      }))
-    );
+  console.log(posts);
 
   return [
     {
-      url: siteConfig.url,
-
+      url: "https://vasudhev.com",
       lastModified: new Date(),
-
-      changeFrequency: "daily" as const,
-
-      priority: 1,
     },
-
-    ...postUrls,
   ];
 }
