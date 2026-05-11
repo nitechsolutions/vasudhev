@@ -33,7 +33,7 @@ export default function CategorySection({
 
       {posts.map((post) => {
         return (
-          <Link key={post.slug} href={`/${post.category}/${post.slug}`} className="flex gap-3 mb-3">
+          <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="flex gap-3 mb-3">
             <img  src={post.image} alt={post.slug} className=" h-16 object-cover rounded" />
             <p className="hover:text-red-600 active:text-red-600 text-gray-700 transition font-semibold">
               {post.title}

@@ -57,7 +57,7 @@ export default function MobileMenu({
             {categories?.map((cat) => (
               <Link
                 key={cat.slug}
-                href={`${prefix}/${cat.slug}`}
+                href={`${prefix}/blog/${cat.slug}`}
                 onClick={toggle}
                 className="capitalize"
               >

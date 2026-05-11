@@ -2,12 +2,11 @@ import {
   getCategoryPosts,
   getTrendingPosts,
 } from "@/lib/service/category.service";
-import CategoryGrid from "../components/category/CategoryGrid";
-import Pagination from "../components/category/Pagination";
+import CategoryGrid from "../../components/category/CategoryGrid";
+import Pagination from "../../components/category/Pagination";
 import { getDefaultLanguage } from "@/lib/service/language.service";
-import CategorySection from "../components/home/CategorySection";
+import CategorySection from "../../components/home/CategorySection";
 import { ArrowBigRight } from "lucide-react";
-import { notFound } from "next/navigation";
 const POSTS_PER_PAGE = 8;
 
 export const revalidate = 60;
@@ -20,7 +19,7 @@ export default async function CategoryPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   const { category } = await params;
-   
+
   const { page } = await searchParams;
 
   const language = await getDefaultLanguage();

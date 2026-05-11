@@ -10,7 +10,7 @@ export async function GET() {
       post.post_translations.map((t) => {
         return `
         <url>
-          <loc>${siteConfig.url}/${post.categories?.slug}/${t.slug}</loc>
+          <loc>${siteConfig.url}/blog//${post.categories?.slug}/${t.slug}</loc>
           <lastmod>${new Date(post.updated_at).toISOString()}</lastmod>
           <changefreq>weekly</changefreq>
           <priority>0.7</priority>

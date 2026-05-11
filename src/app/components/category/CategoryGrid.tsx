@@ -13,7 +13,7 @@ export default function CategoryGrid({
       {posts.map((post) => (
         <Link
           key={post.slug}
-          href={`/${post.category}/${post.slug}`}
+          href={`/blog/${post.category}/${post.slug}`}
           className="group"
         >
           {post.image && (

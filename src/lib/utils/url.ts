@@ -5,7 +5,7 @@ export function buildPostUrl(
   defaultLang: string
 ) {
   if (lang === defaultLang) {
-    return `/${category}/${slug}`;
+    return `blog/${category}/${slug}`;
   }
 
   return `/${lang}/${category}/${slug}`;

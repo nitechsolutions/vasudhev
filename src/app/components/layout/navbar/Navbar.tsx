@@ -42,7 +42,7 @@ export default async function Navbar({ lang }: { lang: string }) {
           </ActiveLink>
 
           {categories?.map((cat: CategoryItem) => (
-            <ActiveLink key={cat.slug} href={`${prefix}/${cat.slug}`}>
+            <ActiveLink key={cat.slug} href={`${prefix}/blog/${cat.slug}`}>
               {cat.name}
             </ActiveLink>
           ))}
