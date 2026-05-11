@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     )
     .flatMap((post) =>
       post.post_translations.map((translation) => ({
-        url: `${siteConfig.url}/blog/${post.categories?.slug}/${translation.slug}`,
+        url: `${siteConfig.url}/blog/${translation.slug}`,
 
         lastModified: new Date(post.updated_at),
 
