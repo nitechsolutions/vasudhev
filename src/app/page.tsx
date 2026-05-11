@@ -73,23 +73,22 @@ export const metadata: Metadata = {
 
 export default async function Home() {
 
-  const lang = await getDefaultLanguage();
-  // console.log("homelang", lang.code);
+    const data = await getHomeData();
 
-  const { featured, trending, categoryData } =
-    await getHomeData(lang.code);
+    // console.log(data);
+    
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-6  grid lg:grid-cols-3 gap-8">
-      <FeaturedSection posts={featured} lang={lang.code} defaultLang={lang.code} />
+      <FeaturedSection posts={data.featured} lang={data.lang} defaultLang={data.defaultLang.code} />
 
       <CategorySection
         title="Trending"
         emoji="🔥"
-        posts={trending}
+        posts={data.trending}
       />
 
-      {categoryData.map((cat) => (
+      {data.categoryData.map((cat) => (
         <CategorySection
           key={cat.slug}
           emoji={cat.emoji}

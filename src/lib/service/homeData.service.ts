@@ -1,86 +1,131 @@
-// lib/services/getHomeData.ts
+// lib/service/homeData.service.ts
 
-import { createServerSupabaseClient } from "../supabase/server";
-import { PostCard } from "../types/blog.types";
-import { CategoryData, HomeData } from "../types/post";
+import { cache } from "react";
+
 import { getDefaultLanguage } from "./language.service";
+import { supabase } from "../supabase/client";
 
-export async function getHomeData(lang?: string):Promise<HomeData> {
-  const supabase = await createServerSupabaseClient();
-
+export const getHomeData = cache(async () => {
   const defaultLang = await getDefaultLanguage();
 
-  const languageCode = lang || defaultLang
+  // console.log(defaultLang);
 
-  // console.log("language", languageCode);
-  
+  /*
+    ALL REQUESTS IN PARALLEL
+  */
 
-  const { data: categories } = await supabase
-    .from("categories")
-    .select("id, slug, name, emoji")
-    .eq("language_code", languageCode);
+  const [categoriesRes, featuredRes, trendingRes, latestPostsRes] =
+    await Promise.all([
+      supabase
+        .from("categories")
+        .select("id, slug, name, emoji")
+        .eq("language_code", "hi"),
 
-  const format = (rows: any[] | null): PostCard[] =>
-    (rows || []).map((post) => ({
+      supabase
+        .from("posts")
+        .select(
+          `
+        id,
+        featured,
+        created_at,
+        categories!posts_category_id_fkey(
+  slug
+),
+        post_translations(title, slug, image, excerpt, language)
+      `,
+        )
+        .eq("featured", true)
+        .eq("post_translations.language", "hi")
+        .order("created_at", { ascending: false })
+        .limit(1),
+
+      supabase
+        .from("posts")
+        .select(
+          `
+        id,
+        trending,
+        created_at,
+       categories!posts_category_id_fkey(
+  slug
+),
+        post_translations(title, slug, image, excerpt, language)
+      `,
+        )
+        .eq("trending", true)
+        .eq("post_translations.language", "hi")
+        .order("created_at", { ascending: false })
+        .limit(4),
+
+      /*
+      FETCH ALL POSTS ONCE
+    */
+      supabase
+        .from("posts")
+        .select(
+          `
+        id,
+        created_at,
+        category_id,
+     categories!posts_category_id_fkey(
+  slug
+),
+        post_translations(title, slug, image, excerpt, language)
+      `,
+        )
+        .eq("post_translations.language", "hi")
+        .order("created_at", { ascending: false })
+        .limit(50),
+    ]);
+
+  const categories = categoriesRes.data || [];
+
+  const latestPosts = latestPostsRes.data || [];
+
+  const format = (rows: any[] | null = []) =>
+  (rows || []).map((post) => {
+    const category = Array.isArray(post.categories)
+      ? post.categories?.[0]
+      : post.categories;
+
+    return {
       title: post.post_translations?.[0]?.title,
       slug: post.post_translations?.[0]?.slug,
       image: post.post_translations?.[0]?.image,
       excerpt: post.post_translations?.[0]?.excerpt,
-      category: post.categories?.slug,
-    }));
+      category: category?.slug,
+    };
+  });
 
-  const { data: featuredRaw } = await supabase
-    .from("posts")
-    .select(`
-      id,
-      categories!inner(slug),
-      post_translations!inner(title, slug, image, excerpt, language)
-    `)
-    .eq("featured", true)
-    .eq("post_translations.language", languageCode)
-    .order('created_at', { ascending: false })
-    .limit(1);
+  /*
+    GROUP POSTS IN MEMORY
+    NO MORE DB QUERIES INSIDE LOOPS
+  */
 
-  const { data: trendingRaw } = await supabase
-    .from("posts")
-    .select(`
-      id,
-      categories!inner(slug),
-      post_translations!inner(title, slug, image, language)
-    `)
-    .eq("trending", true)
-    .eq("post_translations.language", languageCode)
-    .order('created_at', { ascending: false })
-    .limit(4);
+  const categoryData = categories.map((cat) => {
+  const posts = latestPosts
+    .filter((post) => {
+      const category = Array.isArray(post.categories)
+        ? post.categories?.[0]
+        : post.categories;
 
-  const categoryData: CategoryData[] = await Promise.all(
-    (categories || []).map(async (cat) => {
-      const { data } = await supabase
-        .from("posts")
-        .select(`
-          id,
-          categories!inner(slug),
-          post_translations!inner(title, slug, image, language)
-        `)
-        .eq("categories.slug", cat.slug)
-        .eq("post_translations.language", languageCode)
-        .order('created_at', { ascending: false })
-        .limit(4);
-
-      return {
-        slug: cat.slug,
-        name: cat.name,
-        emoji: cat.emoji,
-        posts: format(data),
-      };
+      return category?.slug === cat.slug;
     })
-  );
+    .slice(0, 4);
 
   return {
-    featured: format(featuredRaw),
-    trending: format(trendingRaw),
+    slug: cat.slug,
+    name: cat.name,
+    emoji: cat.emoji,
+    posts: format(posts),
+  };
+});
+
+  return {
+    featured: format(featuredRes.data),
+    trending: format(trendingRes.data),
     categoryData,
-    lang: languageCode,
+    lang: "hi",
     defaultLang,
   };
-}
+});

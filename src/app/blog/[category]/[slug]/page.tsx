@@ -28,17 +28,11 @@ export async function generateMetadata({ params }: Props) {
 
   const { slug, category } = await params;
 
-  if (
-  category === "sitemap.xml" ||
-  category === "robots.txt"
-) {
-  return notFound();
-}
   const post = await getBlogData(slug, lang);
 
   if (!post) return {};
 
-  const url = `https://vasudhev.com/${category}/${slug}`;
+  const url = `https://vasudhev.com/blog/${category}/${slug}`;
 
   return {
     title: post?.meta_title || post?.title,
@@ -62,7 +56,7 @@ export async function generateMetadata({ params }: Props) {
     openGraph: {
       title: post?.meta_title || post?.title,
       description: post?.meta_description || "",
-      url: `https://vasudhev.com/${category}/${post.slug}`,
+      url: `https://vasudhev.com/blog/${category}/${post.slug}`,
       siteName: "Vasudhev Finance, Tech and Auto Blog",
       images: [
         {
@@ -104,7 +98,7 @@ export default async function BlogPage({ params }: Props) {
   const related = await getRelatedPosts(category, lang, slug);
   const trending = await getTrendingPosts(lang);
 
-  const url = `https://vasudhev.com/${category}/${slug}`;
+  const url = `https://vasudhev.com/blog/${category}/${slug}`;
 
   return (
 
@@ -152,7 +146,7 @@ export default async function BlogPage({ params }: Props) {
             </div>
 
             {trending.map((post) => (
-                <Link key={post.slug} href={`/${post.category}/${post.slug}`} className="flex gap-3 mb-3 ">
+                <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="flex gap-3 mb-3 ">
                   <img
                     src={post.image}
                     alt={post.slug} 
