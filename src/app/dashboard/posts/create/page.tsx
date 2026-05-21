@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import QuillEditor, {
   QuillEditorHandle,
 } from "@/app/components/dashboard/RichTextEditor";
-import { supabase } from "@/lib/supabase/client";
 import SlugInput from "@/app/components/dashboard/SlugInput";
 import ImageUpload from "@/app/components/dashboard/ImageUpload";
+import { supabase } from "@/lib/supabase/server.client";
 
 interface Category {
   id: string;
@@ -101,6 +101,9 @@ export default function CreateBlogPage() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
+
+      console.log(user);
+      
 
       if (!user) {
         alert("Not authenticated");
