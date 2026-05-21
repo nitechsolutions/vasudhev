@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/layout/navbar/Navbar";
 import Footer from "./components/layout/footer/footer";
 import { getDefaultLanguage } from "@/lib/service/language.service";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -99,6 +100,7 @@ export default async function RootLayout({
         <Navbar lang={data.code} />
         <main className="flex-1">{children}</main>
         <Footer lang={data.code} />
+        <Analytics/> 
       </body>
     </html>
   );
