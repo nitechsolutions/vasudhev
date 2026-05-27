@@ -24,6 +24,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }))
     );
 
+     const staticPages: MetadataRoute.Sitemap = [
+    {
+      url: `${siteConfig.url}/about`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${siteConfig.url}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/privacy-policy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+  ];
+
   return [
     {
       url: siteConfig.url,
@@ -31,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily" as const,
       priority: 1,
     },
-
+  ...staticPages,
     ...postUrls,
   ];
 }
