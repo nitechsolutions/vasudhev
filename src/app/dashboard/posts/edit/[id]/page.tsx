@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase/client";
 
 
 import QuillEditor, {
@@ -11,6 +10,7 @@ import QuillEditor, {
 
 import SlugInput from "@/app/components/dashboard/SlugInput";
 import ImageUpload from "@/app/components/dashboard/ImageUpload";
+import { supabase } from "@/lib/supabase/server.client";
 
 export default function EditPostPage() {
   const router = useRouter();
