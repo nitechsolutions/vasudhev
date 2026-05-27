@@ -97,7 +97,7 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8924375033562590"
-     crossorigin="anonymous"></script>
+     crossOrigin="anonymous"></script>
       <body className="w-full items-center flex flex-col">
         <Navbar lang={data.code} />
         <main className="flex-1">{children}</main>
