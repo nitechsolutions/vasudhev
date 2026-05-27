@@ -96,6 +96,8 @@ export default async function RootLayout({
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX"
         crossOrigin="anonymous"
       ></script> */}
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8924375033562590"
+     crossOrigin="anonymous"></script>
       <body className="w-full items-center flex flex-col">
         <Navbar lang={data.code} />
         <main className="flex-1">{children}</main>
