@@ -4,7 +4,8 @@ import "./globals.css";
 import Navbar from "./components/layout/navbar/Navbar";
 import Footer from "./components/layout/footer/footer";
 import { getDefaultLanguage } from "@/lib/service/language.service";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,15 +17,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata =  {
+export const metadata: Metadata = {
   metadataBase: new URL("https://vasudhev.com"),
-  title: {default:  "Vasudhev - Money Investment Guideline, Earn Money, Tech, Auto & Finance Blogs in Hindi",
-            template: "%s | Vasudhev",
-         },
+  title: {
+    default:
+      "Vasudhev - Money Investment Guideline, Earn Money, Tech, Auto & Finance Blogs in Hindi",
+    template: "%s | Vasudhev",
+  },
   description:
     "Vasudhev.com पर पढ़ें Tech, Auto और Finance से जुड़े आसान और उपयोगी ब्लॉग। Electric Cars, Bikes, SIP Investment, Loans, Mobile Phones and Laptops, Gadgets और बहुत कुछ हिंदी में।",
-  icons:{
-    icon: {url: '/favicon.png'}
+  icons: {
+    icon: { url: "/favicon.png" },
   },
   verification: {
     google: "h2r-7ZmZZMNmEyjCH5M9Ub1UFh5TYqNrSpRipHOfa1c",
@@ -42,7 +45,7 @@ export const metadata: Metadata =  {
     "best bikes under 2 lakh",
     "best laptops",
     "best smartphones",
-    "online earn money"
+    "online earn money",
   ],
 
   authors: [{ name: "Vasudhev Team" }],
@@ -54,7 +57,8 @@ export const metadata: Metadata =  {
     locale: "hi_IN",
     url: "https://vasudhev.com",
     siteName: "Vasudhev",
-    title: "Vasudhev - Money Investment Guideline, Earn Money, Tech, Auto & Finance Blogs in Hindi",
+    title:
+      "Vasudhev - Money Investment Guideline, Earn Money, Tech, Auto & Finance Blogs in Hindi",
     description:
       "Tech, Auto और Finance से जुड़े ब्लॉग हिंदी में। आसान भाषा में समझें investment, gadgets और vehicles.",
     images: [
@@ -70,8 +74,7 @@ export const metadata: Metadata =  {
   twitter: {
     card: "summary_large_image",
     title: "Vasudhev Blog",
-    description:
-      "Tech, Auto और Finance ब्लॉग हिंदी में पढ़ें।",
+    description: "Tech, Auto और Finance ब्लॉग हिंदी में पढ़ें।",
     images: ["/og-image.jpg"],
   },
 
@@ -96,13 +99,20 @@ export default async function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8924375033562590"
-     crossOrigin="anonymous"></script>
       <body className="w-full items-center flex flex-col">
         <Navbar lang={data.code} />
         <main className="flex-1">{children}</main>
         <Footer lang={data.code} />
-        <Analytics/> 
+        <Analytics />
+        <Script
+          src="https://push.aplu.io/push-notify.js"
+          strategy="afterInteractive"
+        />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8924375033562590"
+          crossOrigin="anonymous"
+        ></script>
       </body>
     </html>
   );
