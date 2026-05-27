@@ -31,6 +31,11 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "h2r-7ZmZZMNmEyjCH5M9Ub1UFh5TYqNrSpRipHOfa1c",
+    other: {
+    "p:domain_verify": [
+      "bba796a2d2be69d9a0271dcc81fc40c7"
+    ],
+    },
   },
   keywords: [
     "vasudhev",
