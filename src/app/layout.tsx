@@ -18,11 +18,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata =  {
   metadataBase: new URL("https://vasudhev.com"),
-  title: "Vasudhev - Money Investment Guideline, Earn Money, Tech, Auto & Finance Blogs in Hindi",
+  title: {default:  "Vasudhev - Money Investment Guideline, Earn Money, Tech, Auto & Finance Blogs in Hindi",
+            template: "%s | Vasudhev",
+         },
   description:
     "Vasudhev.com पर पढ़ें Tech, Auto और Finance से जुड़े आसान और उपयोगी ब्लॉग। Electric Cars, Bikes, SIP Investment, Loans, Mobile Phones and Laptops, Gadgets और बहुत कुछ हिंदी में।",
   icons:{
     icon: {url: '/favicon.png'}
+  },
+  verification: {
+    google: "h2r-7ZmZZMNmEyjCH5M9Ub1UFh5TYqNrSpRipHOfa1c",
   },
   keywords: [
     "vasudhev",
@@ -91,12 +96,7 @@ export default async function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      {/* <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX"
-        crossOrigin="anonymous"
-      ></script> */}
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8924375033562590"
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8924375033562590"
      crossOrigin="anonymous"></script>
       <body className="w-full items-center flex flex-col">
         <Navbar lang={data.code} />
