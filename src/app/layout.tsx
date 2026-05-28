@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     ],
     },
   },
+  other: {
+    "google-adsense-account": "ca-pub-8924375033562590",
+  },
   keywords: [
     "vasudhev",
     "hindi blog",
@@ -101,7 +104,7 @@ export default async function RootLayout({
   const data = await getDefaultLanguage();
   return (
     <html
-      lang="en"
+      lang="hi"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="w-full items-center flex flex-col">
