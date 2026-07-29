@@ -6,7 +6,6 @@ import Footer from "./components/layout/footer/footer";
 import { getDefaultLanguage } from "@/lib/service/language.service";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
-import AdSense from "./components/adSense/ads";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -101,7 +100,19 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="w-full items-center flex flex-col">
-        <AdSense />
+        <>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8924375033562590"
+     crossOrigin="anonymous"></script>
+<ins className="adsbygoogle"
+     style={{ display: 'block' }}
+     data-ad-client="ca-pub-8924375033562590"
+     data-ad-slot="6037473465"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</>
         <Navbar lang={data.code} />
         <main className="flex-1">{children}</main>
         <Footer lang={data.code} />
